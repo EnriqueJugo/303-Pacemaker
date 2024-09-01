@@ -1,0 +1,66 @@
+// pacemaker main folder
+// https://us.nallen.me/cs303/ use this link to test scchart
+scchart main "Pacemaker"{
+    input signal AS, VS // Atrial and Ventricular Sense
+    output signal AP, VP // Atrial and Ventricular Pace
+
+    region AVI{
+        // want to block any VP from occuring in this time frame
+        clock x = 0
+        initial state inactive
+        if AS go to wait
+
+        state wait
+        if VS go to inactive
+        if x>=60 go to pulse
+
+        state pulse
+        do VP go to inactive
+    }
+
+// deltaT being the amount of ticks between a certain time
+// sleepT default set to 1000, mimimum time for a reaction to occur?
+
+    // region "Max and Min pulse time"{
+    // region URI{
+    //     // want to block any VP from occuring in this time frame
+    //     clock x = 0
+    //     initial state wURI
+    //     if x>=60 go to dURI
+
+    //     state dURI
+    //     // here we can trigger an event
+    //     if x>=90 do x = 0 go to wURI
+    // }
+
+    // region LRI{
+    //     // want to ensure a VP occurs in this time frame
+    //     clock x = 0
+    //     initial state wLRI
+    //     if x>=120 go to dLRI
+    //     state dLRI
+    //     if x>=110 do x = 0 go to wLRI
+    // }
+    // }
+}
+  
+  
+/*scchart example{
+
+    region URI{
+        clock x = 0
+        initial state wURI
+        if x>=60 go to dURI
+
+        state dURI
+        if x>=90 do x = 0 go to wURI
+    }
+
+    region LRI{
+        clock x = 0
+        initial state wLRI
+        if x>=120 go to dLRI
+        state dLRI
+        if x>=110 do x = 0 go to wLRI
+    }
+} // doesnt work as x will be reset to 0 in the next region so never reaches 120*/

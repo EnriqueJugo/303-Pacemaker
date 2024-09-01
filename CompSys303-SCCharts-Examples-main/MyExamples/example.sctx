@@ -1,0 +1,17 @@
+scchart example{
+    input signal dURI, dLRI
+    clock x = 0
+    region URI{
+        initial state wURI
+        if x>=60 go to dURI
+        state dURI
+        if x>=90 do x = 0 go to wURI
+    }
+
+    region LRI{
+        initial state wLRI
+        if x>=120 go to dLRI
+        state dLRI
+        if x>=110 do x = 0 go to wLRI
+    }
+} // doesnt work as x will be reset to 0 in the next region so never reaches 120
