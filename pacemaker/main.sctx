@@ -1,64 +1,17 @@
 // pacemaker main folder
 // https://us.nallen.me/cs303/ use this link to test scchart
-// https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Syntax
+// https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Syntaclk
 #hostcode-c "#include <stdio.h>"
 scchart main "Pacemaker"{
     input signal AS, VS // Atrial and Ventricular Sense
     output signal AP, VP // Atrial and Ventricular Pace
 
-    region AVI{
-        // want to block any VP from occuring in this time frame
-        clock x = 0
-        initial state inactive
-        if AS go to waitForVS
-
-        state waitForVS
-        if VS go to inactive
-        if x>=60 go to pulseVP // idk what x should be set to, Im assuming a specific tick value?
-
-        state pulseVP
-        do VP go to inactive
-    }
-
-     region AEI{
-        // want to block any VP from occuring in this time frame
-        clock x = 0
-        initial state inactive
-        if (VS || VP) go to waitForAS
-
-        state waitForAS
-        if AS go to inactive
-        if x>=60 go to pulseAP // Hard deadline, if no AS is sensed within 60 ticks, then we must pace the atrium
-
-        state pulseAP
-        do AP go to inactive
-    }
-
-    region PVARP{
-       // Post Ventricular Atrial Refactory Period, blocks AS/AP from occuring after a VS/VP
-        clock x = 0
-        initial state inactive
-        if (VS || VP) go to blocking
-
-        state blocking
-        if (VS || VP) && (x<60) go to blocking
-        // transition to wait state
-        if x>=60 go to inactive
-
-    }
-
-    region VRP{
-        // Ventricular Refactory Period, blocks VS/VP from occuring after a AS/AP
-        clock x = 0
-        initial state inactive
-        if (AS || AP) && (x<60) go to inactive
-    }
 
     region LRI{
         // want to block any VP from occuring in this time frame
-        clock x = 0
+        clock clk = 0
         initial state inactive
-        if x>=60 go to pulseAP // Hard deadline, if no AS is sensed within 60 ticks, then we must pace the atrium
+        if clk>=60 go to pulseAP // Hard deadline, if no AS is sensed within 60 ticks, then we must pace the atrium
 
         state pulseAP
         do AP go to inactive
@@ -66,11 +19,72 @@ scchart main "Pacemaker"{
 
     region URI{
         // want to block any VP from occuring in this time frame
-        clock x = 0
+        clock clk = 0
         initial state inactive
-        if x>=60 go to pulseVP // Hard deadline, if no VS is sensed within 60 ticks, then we must pace the ventricle
+        if clk>=60 go to pulseVP // Hard deadline, if no VS is sensed within 60 ticks, then we must pace the ventricle
 
         state pulseVP
         do VP go to inactive
-    }   
+    }
+
+
+    region Atrium{
+
+    region AVI{
+        // want to block any VP from occuring in this time frame
+        clock clk = 0
+        initial state inactive
+        if AS || AP go to waitForVS
+
+        state waitForVS
+        if VS go to inactive
+        if clk>=60 go to pulseVP// idk what clk should be set to, Im assuming a specific tick value?
+
+        state pulseVP
+        do VP go to inactive
+    }
+
+    region PVARP{
+       // Post Ventricular Atrial Refactory Period, blocks AS/AP from occuring after a VS/VP
+        clock clk = 0
+        initial state inactive
+        if (VS || VP) go to blocking
+
+        state blocking
+        if (VS || VP) && (clk<60) go to blocking
+        // transition to wait state
+        if clk>=60 go to inactive
+
+    }
+    }
+
+    region Ventricle{
+    region AEI{
+        // want to block any VP from occuring in this time frame
+        clock clk = 0
+        initial state inactive
+        if (VS || VP) go to waitForAS
+
+        state waitForAS
+        if AS go to inactive
+        if (clk>=60) go to pulseAP // Hard deadline, if no AS is sensed within 60 ticks, then we must pace the atrium
+
+        state pulseAP
+        do AP go to inactive
+    }
+
+    region VRP{
+        // Ventricular Refactory Period, blocks VS/VP from occuring after a AS/AP
+        clock clk = 0
+        initial state inactive
+        if (AS || AP) && (clk<60) go to blocking
+
+
+        state blocking
+        if AS || AP go to blocking
+        if (clk>=60) go to inactive
+    }
+
+    }
+    
 }
