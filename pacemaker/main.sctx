@@ -1,46 +1,114 @@
 // pacemaker main folder
 // https://us.nallen.me/cs303/ use this link to test scchart
-// https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Syntax
+// https://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Syntaclk
+
+// timing.h contains values for the time constraints
+
+#resource "timing.h"
+#hostcode-c "#include \"timing.h\"" 
+#hostcode-c "#include <stdio.h>"
 scchart main "Pacemaker"{
     input signal AS, VS // Atrial and Ventricular Sense
-    output signal AP, VP // Atrial and Ventricular Pace
+    output signal AP, VP //, VR, AR // Atrial and Ventricular Pace
 
-    region AVI{
-        // want to block any VP from occuring in this time frame
-        clock x = 0
-        initial state inactive
-        if AS go to waitForVS
+    signal ADetected, VDetected //, VRDetected, ARDetected
 
-        state waitForVS
-        if VS go to inactive
-        if x>=60 go to pulseVP // idk what x should be set to, Im assuming a specific tick value?
+    region Sensing{
+        region ASens{ // need to check if atrium signal has occured before 
+        initial state check
+        if (AS || AP) do ADetected go to wait
 
-        state pulseVP
-        do VP go to inactive
+        state wait
+        if VDetected go to check
+        }
+    
+        region VSens{
+        initial state check
+        if (VS || VP) do VDetected go to wait
+
+        state wait
+        if ADetected go to check // might cause a deadlock idk
+        }    
     }
-
-// deltaT being the amount of ticks between a certain time
-// sleepT default set to 1000, mimimum time for a reaction to occur?
-
-    // region "Max and Min pulse time"{
-    // region URI{
-    //     // want to block any VP from occuring in this time frame
-    //     clock x = 0
-    //     initial state wURI
-    //     if x>=60 go to dURI
-
-    //     state dURI
-    //     // here we can trigger an event
-    //     if x>=90 do x = 0 go to wURI
-    // }
+    
 
     // region LRI{
-    //     // want to ensure a VP occurs in this time frame
-    //     clock x = 0
-    //     initial state wLRI
-    //     if x>=120 go to dLRI
-    //     state dLRI
-    //     if x>=110 do x = 0 go to wLRI
+    //     // want to block any VP from occuring in this time frame
+    //     clock clk = 0
+    //     initial state inactive
+    //     if (clk >= `LRI_VALUE`) go to pulseVP // Hard deadline, if no AS is sensed within LRI_VALUE, then we must pace the atrium
+
+    //     state pulseVP
+    //     do VP go to inactive
     // }
+
+    // region URI{
+    //     // want to block any VP from occuring in this time frame
+    //     clock clk = 0
+    //     initial state inactive
+    //     if (clk >= `URI_VALUE`) go to pulseVP // Hard deadline, no VP/VS should be paced until URI_VALUE ticks have passed
+        
+    //     state pulseVP
+    //     do VP go to inactive
     // }
+
+
+//    region Atrium{
+//    region AVI{
+//        // want to block any VP from occuring in this time frame
+//        clock clk = 0
+//        initial state inactive
+//        if AS || AP go to waitForVS
+//
+//        state waitForVS
+//        if VS go to inactive
+//        if (clk >= `AVI_VALUE`) go to pulseVP// idk what clk should be set to, Im assuming a specific tick value?
+//
+//        state pulseVP
+//        do VP go to inactive
+//    }
+//
+//    region PVARP{
+//       // Post Ventricular Atrial Refactory Period, blocks AS/AP from occuring after a VS/VP
+//        clock clk = 0
+//        initial state inactive
+//        if (VS || VP) go to blocking
+//
+//        state blocking
+//        if (VS || VP) && (clk < `PVARP_VALUE`) go to blocking
+//        // transition to wait state
+//        if (clk >= `PVARP_VALUE`) go to inactive
+//
+//    }
+//    }
+//
+//    region Ventricle{
+//    region AEI{
+//        // want to block any VP from occuring in this time frame
+//        clock clk = 0
+//        initial state inactive
+//        if (VS || VP) go to waitForAS
+//
+//        state waitForAS
+//        if AS go to inactive
+//        if (clk >= `AEI_VALUE`) go to pulseAP // Hard deadline, if no AS is sensed within 60 ticks, then we must pace the atrium
+//
+//        state pulseAP
+//        do AP go to inactive
+//    }
+//
+//    region VRP{
+//        // Ventricular Refactory Period, blocks VS/VP from occuring after a AS/AP
+//        clock clk = 0
+//        initial state inactive
+//        if (AS || AP) && (clk < `VRP_VALUE`) go to blocking
+//
+//
+//        state blocking
+//        if AS || AP go to blocking
+//        if (clk >= `VRP_VALUE`) go to inactive
+//    }
+//
+//    }
+    
 }
