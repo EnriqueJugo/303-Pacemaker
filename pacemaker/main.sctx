@@ -1,5 +1,5 @@
 @ClocksUseSD
-scchart main "pacemaker" {
+scchart pacemaker {
   const int AVI_VALUE = 3 // 300
   const int AEI_VALUE = 8 // 800
   const int PVARP_VALUE = 5 // 50
@@ -8,7 +8,7 @@ scchart main "pacemaker" {
   const int URI_VALUE = 9 //900
   
   input signal AS, VS
-  signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE // , LRI_END
+  signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE, LRI_END
   output signal AP, VP
   
   region "Atrium Actions"{
@@ -16,7 +16,7 @@ scchart main "pacemaker" {
     
     initial state idle 
     if AS go to aa
-//    if VS go to va
+    if VS go to va
 
     state aa "Atrial Active" {
       entry do x = 0 // on entry set 
@@ -24,7 +24,7 @@ scchart main "pacemaker" {
       region "AVI" {
         initial state active
         if x >= AVI_VALUE && !URI_ACTIVE go to done
-//        if x<= AVI_VALUE && LRI_END go to done // SPECIAL CASE IF AVI + AEI < LRI
+        if x<= AVI_VALUE && LRI_END go to done // SPECIAL CASE IF AVI + AEI < LRI
         final state done
         
       }
@@ -95,7 +95,9 @@ scchart main "pacemaker" {
       
       region "LRI" {
         initial state active {
-//         exit do LRI_END
+//         exit do LRI_END not gooooooooood!
+
+
         }
 
         if x >= LRI_VALUE go to done
@@ -103,7 +105,7 @@ scchart main "pacemaker" {
       }
               
     }
-    // if VS || VP abort to active
+    if VS || VP abort to active
     join to idle
   }
   
