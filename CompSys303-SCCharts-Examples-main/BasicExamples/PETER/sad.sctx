@@ -1,5 +1,5 @@
 @ClocksUseSD
-scchart main "pacemaker" {
+scchart ap "XXXTENTASION" {
   const int AVI_VALUE = 3 // 300
   const int AEI_VALUE = 8 // 800
   const int PVARP_VALUE = 5 // 50
@@ -8,29 +8,26 @@ scchart main "pacemaker" {
   const int URI_VALUE = 9 //900
   
   input signal AS, VS
-  signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE // , LRI_END
+  signal VRP_ACTIVE
   output signal AP, VP
   
+
+  
   region "Atrium Actions"{
-    clock x = 0
-    
+    clock x = 0  
     initial state idle 
     if AS go to aa
-//    if VS go to va
-
     state aa "Atrial Active" {
-      entry do x = 0 // on entry set 
+      entry do x = 0
       
       region "AVI" {
         initial state active
-        if x >= AVI_VALUE && !URI_ACTIVE go to done
-//        if x<= AVI_VALUE && LRI_END go to done // SPECIAL CASE IF AVI + AEI < LRI
+        if x >= AVI_VALUE go to done
         final state done
         
       }
     }
-    
-    if ((VS || VP) && !VRP_ACTIVE) abort to delay
+    if ((VS || VP) && ! VRP_ACTIVE) abort to delay
     do VP join to delay
     
    state delay {
@@ -42,7 +39,6 @@ scchart main "pacemaker" {
      }
    }
    join to va
-
    
    state va "Ventricle Active" {
      region "AEI" {
@@ -62,49 +58,12 @@ scchart main "pacemaker" {
       clock x = 0
       region "VRP" {
         initial state active {
+          entry do VRP_ACTIVE
           during do VRP_ACTIVE
         }
         if x >= VRP_VALUE go to done
         final state done
       }
     }
-    join to idle
   }
-  
-    region "URI Ventricle Actions" {
-    initial state idle
-    if VS || VP go to active
-    state active {
-      clock x = 0
-      region "URI" {
-        initial state active {
-          during do URI_ACTIVE
-        }
-        if x >= URI_VALUE go to done
-        final state done
-      }
-    }
-    join to idle
-  }
-  
-   region "LRI Ventricle Actions" {
-    initial state idle
-    if VS || VP go to active
-    state active {
-      clock x = 0
-      
-      region "LRI" {
-        initial state active {
-//         exit do LRI_END
-        }
-
-        if x >= LRI_VALUE go to done
-        final state done// on getting to done state make x = 0
-      }
-              
-    }
-    // if VS || VP abort to active
-    join to idle
-  }
-  
 }
