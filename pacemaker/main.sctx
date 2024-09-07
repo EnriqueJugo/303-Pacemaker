@@ -8,7 +8,7 @@ scchart pacemaker {
   const int URI_VALUE = 9 //900
   
   input signal AS, VS
-  signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE, LRI_END
+  signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE
   output signal AP, VP
   
   region "Atrium Actions"{
@@ -24,12 +24,11 @@ scchart pacemaker {
       region "AVI" {
         initial state active
         if x >= AVI_VALUE && !URI_ACTIVE go to done
-        if x<= AVI_VALUE && LRI_END go to done // SPECIAL CASE IF AVI + AEI < LRI
+        if x < AVI_VALUE && !LRI_ACTIVE go to done // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
         final state done
         
       }
     }
-    
     if ((VS || VP) && !VRP_ACTIVE) abort to delay
     do VP join to delay
     
@@ -57,7 +56,7 @@ scchart pacemaker {
   
   region "Ventricle Actions" {
     initial state idle
-    if VS go to active
+    if VS || VP go to active
     state active {
       clock x = 0
       region "VRP" {
@@ -95,9 +94,7 @@ scchart pacemaker {
       
       region "LRI" {
         initial state active {
-//         exit do LRI_END not gooooooooood!
-
-
+        during do LRI_ACTIVE
         }
 
         if x >= LRI_VALUE go to done
