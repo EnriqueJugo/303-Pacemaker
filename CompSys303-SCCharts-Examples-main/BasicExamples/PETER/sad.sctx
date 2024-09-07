@@ -1,0 +1,69 @@
+@ClocksUseSD
+scchart ap "XXXTENTASION" {
+  const int AVI_VALUE = 3 // 300
+  const int AEI_VALUE = 8 // 800
+  const int PVARP_VALUE = 5 // 50
+  const int VRP_VALUE = 15 // 150
+  const int LRI_VALUE = 10 // 950
+  const int URI_VALUE = 9 //900
+  
+  input signal AS, VS
+  signal VRP_ACTIVE
+  output signal AP, VP
+  
+
+  
+  region "Atrium Actions"{
+    clock x = 0  
+    initial state idle 
+    if AS go to aa
+    state aa "Atrial Active" {
+      entry do x = 0
+      
+      region "AVI" {
+        initial state active
+        if x >= AVI_VALUE go to done
+        final state done
+        
+      }
+    }
+    if ((VS || VP) && ! VRP_ACTIVE) abort to delay
+    do VP join to delay
+    
+   state delay {
+     entry do x = 0
+     region "PVARP" {
+       initial state active
+       if x >= PVARP_VALUE go to done
+       final state done
+     }
+   }
+   join to va
+   
+   state va "Ventricle Active" {
+     region "AEI" {
+       initial state active
+       if x >= AEI_VALUE go to done
+       final state done
+     }
+   }
+   if AS abort to aa
+   do AP join to aa
+  }
+  
+  region "Ventricle Actions" {
+    initial state idle
+    if VS go to active
+    state active {
+      clock x = 0
+      region "VRP" {
+        initial state active {
+          entry do VRP_ACTIVE
+          during do VRP_ACTIVE
+        }
+        if x >= VRP_VALUE go to done
+        final state done
+      }
+    }
+  }
+}

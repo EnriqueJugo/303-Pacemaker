@@ -1,14 +1,12 @@
+#resource "timing.h"
+#hostcode-c "#include \"timing.h\""
+#hostcode-c "#include <stdio.h>"
 @ClocksUseSD
+
 scchart pacemaker {
-  const int AVI_VALUE = 3 // 300
-  const int AEI_VALUE = 8 // 800
-  const int PVARP_VALUE = 5 // 50
-  const int VRP_VALUE = 15 // 150
-  const int LRI_VALUE = 10 // 950
-  const int URI_VALUE = 9 //900
   
   input signal AS, VS
-  signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE
+  signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE, LRI_END
   output signal AP, VP
   
   region "Atrium Actions"{
@@ -23,12 +21,13 @@ scchart pacemaker {
       
       region "AVI" {
         initial state active
-        if x >= AVI_VALUE && !URI_ACTIVE go to done
-        if x < AVI_VALUE && !LRI_ACTIVE go to done // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
+        if x >= `AVI_VALUE` && !URI_ACTIVE go to done
+        if !(x >= `AVI_VALUE`) && LRI_END go to done // SPECIAL CASE IF AVI + AEI < LRI
         final state done
         
       }
     }
+    
     if ((VS || VP) && !VRP_ACTIVE) abort to delay
     do VP join to delay
     
@@ -36,7 +35,7 @@ scchart pacemaker {
      entry do x = 0
      region "PVARP" {
        initial state active
-       if x >= PVARP_VALUE go to done
+       if x >= `PVARP_VALUE` go to done
        final state done
      }
    }
@@ -46,7 +45,7 @@ scchart pacemaker {
    state va "Ventricle Active" {
      region "AEI" {
        initial state active
-       if x >= AEI_VALUE go to done
+       if x >= `AEI_VALUE` go to done
        final state done
      }
    }
@@ -56,14 +55,14 @@ scchart pacemaker {
   
   region "Ventricle Actions" {
     initial state idle
-    if VS || VP go to active
+    if VS go to active
     state active {
       clock x = 0
       region "VRP" {
         initial state active {
           during do VRP_ACTIVE
         }
-        if x >= VRP_VALUE go to done
+        if x >= `VRP_VALUE` go to done
         final state done
       }
     }
@@ -79,7 +78,7 @@ scchart pacemaker {
         initial state active {
           during do URI_ACTIVE
         }
-        if x >= URI_VALUE go to done
+        if x >= `URI_VALUE` go to done
         final state done
       }
     }
@@ -94,10 +93,12 @@ scchart pacemaker {
       
       region "LRI" {
         initial state active {
-        during do LRI_ACTIVE
+//         exit do LRI_END not gooooooooood!
+
+
         }
 
-        if x >= LRI_VALUE go to done
+        if x >= `LRI_VALUE` go to done
         final state done// on getting to done state make x = 0
       }
               
