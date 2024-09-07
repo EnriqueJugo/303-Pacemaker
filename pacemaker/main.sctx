@@ -23,7 +23,8 @@ scchart pacemaker {
       
       region "AVI" {
         initial state active
-        if x >= AVI_VALUE && !URI_ACTIVE go to done
+        if URI_ACTIVE go to active
+        if x >= AVI_VALUE go to done
         if x < AVI_VALUE && !LRI_ACTIVE go to done // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
         final state done
         
@@ -70,40 +71,27 @@ scchart pacemaker {
     join to idle
   }
   
-    region "URI Ventricle Actions" {
+    region "URI and LRI Ventricle Actions" {
     initial state idle
-    if VS || VP go to active
-    state active {
+    if VS || VP go to URI_LRI
+    state URI_LRI {
       clock x = 0
-      region "URI" {
-        initial state active {
+      
+      region "URI LRI" {
+        initial state URIa {
           during do URI_ACTIVE
         }
-        if x >= URI_VALUE go to done
+        if x >= URI_VALUE) go to LRIa
+        
+        state LRIa{
+          during do LRI_ACTIVE
+        }
+        
+        if x >= LRI_VALUE go to done
         final state done
       }
     }
+    if VS || VP go to URI_LRI
     join to idle
   }
-  
-   region "LRI Ventricle Actions" {
-    initial state idle
-    if VS || VP go to active
-    state active {
-      clock x = 0
-      
-      region "LRI" {
-        initial state active {
-        during do LRI_ACTIVE
-        }
-
-        if x >= LRI_VALUE go to done
-        final state done// on getting to done state make x = 0
-      }
-              
-    }
-    if VS || VP abort to active
-    join to idle
-  }
-  
 }
