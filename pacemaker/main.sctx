@@ -102,7 +102,7 @@ scchart pacemaker {
       }
               
     }
-    if VS || VP abort to active
+    //if VS || VP abort to active CAUSING US ISSUES
     join to idle
   }
   
