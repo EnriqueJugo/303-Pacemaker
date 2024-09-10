@@ -81,7 +81,7 @@ scchart pacemaker {
         initial state URIa {
           during do URI_ACTIVE
         }
-        if x >= URI_VALUE) go to LRIa
+        if (x >= URI_VALUE) go to LRIa
         
         state LRIa{
           during do LRI_ACTIVE
