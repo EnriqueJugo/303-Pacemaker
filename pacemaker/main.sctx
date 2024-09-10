@@ -1,5 +1,7 @@
 @ClocksUseSD
 scchart pacemaker {
+
+  // https://us.nallen.me/cs303/
   const int AVI_VALUE = 3 // 300
   const int AEI_VALUE = 8 // 800
   const int PVARP_VALUE = 5 // 50
@@ -25,7 +27,8 @@ scchart pacemaker {
         initial state active
         if URI_ACTIVE go to active
         if x >= AVI_VALUE go to done
-        if x < AVI_VALUE && !LRI_ACTIVE go to done // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
+         // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
+        if !(x >= AVI_VALUE) && !LRI_ACTIVE go to done // if x < AVI_VALUE && !LRI_ACTIVE go to done // Nathan's code says "<" doesnt work.........
         final state done
         
       }
@@ -91,7 +94,7 @@ scchart pacemaker {
         final state done
       }
     }
-    if VS || VP pre abort to URI_LRI
+    if pre(VS) || pre(VP) abort to URI_LRI // pre abort not working:  if VS || VP pre abort to URI_LRI
     join to idle
   }
 }
