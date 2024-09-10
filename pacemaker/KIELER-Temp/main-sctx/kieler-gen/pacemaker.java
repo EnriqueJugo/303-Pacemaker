@@ -19,175 +19,192 @@ public class pacemaker {
   public boolean LRI_ACTIVE;
   public boolean AP;
   public boolean VP;
+  public boolean _reg_VP;
+  public boolean _pre_VP;
+  public boolean _reg_VS;
+  public boolean _pre_VS;
   public boolean _pacemaker_local__CFSterm;
   public boolean _pacemaker_local__CFSterm1;
-  public boolean _pacemaker_local__CFSterm2;
   public boolean _pacemaker_local__Atrig6;
   public boolean _pacemaker_local__Atrig;
   public boolean _pacemaker_local__Atrig1;
   public boolean _pacemaker_local__Atrig2;
   public boolean _pacemaker_local__Atrig3;
-  public double _pacemaker_local_x;
   public boolean _pacemaker_local__Atrig4;
-  public double _pacemaker_local_x1;
+  public double _pacemaker_local_x;
   public boolean _pacemaker_local__Atrig5;
-  public double _pacemaker_local_x2;
+  public double _pacemaker_local_x1;
   public boolean _pacemaker_local__Atrig7;
+  public boolean _pacemaker_local__Atrig8;
   public boolean _g3;
   public boolean _g4;
   public boolean _g5;
   public boolean _g6;
-  public boolean _g8;
-  public boolean _g9;
   public boolean _g10;
-  public boolean _g12;
+  public boolean _g11;
   public boolean _g13;
-  public boolean _g15;
+  public boolean _g14;
   public boolean _g16;
-  public boolean _g19;
-  public boolean _g20;
+  public boolean _g17;
+  public boolean _g21;
   public boolean _g22;
-  public boolean _g23;
-  public boolean _g32;
-  public boolean _g33;
-  public boolean _g34;
-  public boolean _g35;
-  public boolean _g36;
-  public boolean _g37;
-  public boolean _g38;
-  public boolean _g39;
-  public boolean _g42;
-  public boolean _g43;
-  public boolean _g44;
-  public boolean _g45;
+  public boolean _g24;
+  public boolean _g25;
+  public boolean _g27;
+  public boolean _g28;
   public boolean _g46;
+  public boolean _g47;
   public boolean _g48;
+  public boolean _g49;
   public boolean _g50;
   public boolean _g51;
   public boolean _g52;
   public boolean _g53;
-  public boolean _g54;
   public boolean _g56;
   public boolean _g57;
-  public boolean _g60;
-  public boolean _g61;
+  public boolean _g58;
+  public boolean _g59;
   public boolean _g62;
-  public boolean _g63;
   public boolean _g64;
   public boolean _g65;
   public boolean _g66;
   public boolean _g67;
   public boolean _g68;
-  public boolean _g73;
+  public boolean _g70;
   public boolean _g74;
-  public boolean _g84;
-  public boolean _g85;
-  public boolean _g96;
-  public boolean _g103;
-  public boolean _g115;
-  public boolean _g116;
-  public boolean _g127;
-  public boolean _g134;
-  public boolean _g190;
-  public boolean _g198;
+  public boolean _g75;
+  public boolean _g76;
+  public boolean _g77;
+  public boolean _g78;
+  public boolean _g79;
+  public boolean _g80;
+  public boolean _g81;
+  public boolean _g82;
+  public boolean _g89;
+  public boolean _g90;
+  public boolean _g100;
+  public boolean _g101;
+  public boolean _g112;
+  public boolean _g119;
+  public boolean _g199;
+  public boolean _g207;
+  public boolean _g211;
+  public boolean _g215;
   public boolean _GO;
-  public boolean _cg73;
+  public boolean _cg89;
   public boolean _cg4;
-  public boolean _cg7;
   public boolean _cg8;
-  public boolean _cg13;
-  public boolean _cg10;
+  public boolean _cg9;
   public boolean _cg14;
-  public boolean _cg16;
-  public boolean _cg12;
+  public boolean _cg11;
+  public boolean _cg15;
   public boolean _cg17;
-  public boolean _cg24;
+  public boolean _cg13;
+  public boolean _cg18;
+  public boolean _cg19;
   public boolean _cg20;
+  public boolean _cg25;
   public boolean _cg22;
   public boolean _cg26;
-  public boolean _cg27;
-  public boolean _cg30;
-  public boolean _cg31;
-  public boolean _cg35;
+  public boolean _cg28;
+  public boolean _cg24;
+  public boolean _cg29;
+  public boolean _cg38;
+  public boolean _cg32;
   public boolean _cg34;
-  public boolean _cg37;
+  public boolean _cg36;
   public boolean _cg40;
-  public boolean _cg43;
-  public boolean _cg47;
+  public boolean _cg41;
+  public boolean _cg44;
+  public boolean _cg45;
+  public boolean _cg49;
   public boolean _cg48;
-  public boolean _cg53;
-  public boolean _cg50;
+  public boolean _cg51;
   public boolean _cg54;
-  public boolean _cg56;
-  public boolean _cg52;
   public boolean _cg57;
+  public boolean _cg61;
   public boolean _cg62;
-  public boolean _cg60;
+  public boolean _cg67;
   public boolean _cg64;
-  public boolean _cg65;
+  public boolean _cg68;
   public boolean _cg70;
+  public boolean _cg66;
+  public boolean _cg71;
+  public boolean _cg76;
+  public boolean _cg74;
   public boolean _cg78;
-  public boolean _cg82;
-  public boolean _cg87;
-  public boolean _cg88;
-  public boolean _cg92;
-  public boolean _cg97;
-  public boolean _cg101;
-  public boolean _cg109;
+  public boolean _cg79;
+  public boolean _cg84;
+  public boolean _cg86;
+  public boolean _cg94;
+  public boolean _cg98;
+  public boolean _cg103;
+  public boolean _cg104;
+  public boolean _cg108;
   public boolean _cg113;
-  public boolean _cg118;
-  public boolean _cg119;
-  public boolean _cg123;
-  public boolean _cg128;
-  public boolean _cg132;
+  public boolean _cg117;
+  public boolean _cg125;
+  public boolean _cg129;
+  public boolean _cg133;
+  public boolean _cg131;
+  public boolean _cg134;
+  public boolean _cg135;
   public boolean _cg140;
+  public boolean _cg137;
+  public boolean _cg141;
+  public boolean _cg143;
+  public boolean _cg139;
   public boolean _cg144;
-  public boolean _cg148;
-  public boolean _cg146;
   public boolean _cg149;
-  public boolean _cg150;
-  public boolean _cg155;
-  public boolean _cg152;
-  public boolean _cg156;
-  public boolean _cg158;
+  public boolean _cg147;
+  public boolean _cg151;
+  public boolean _cg176;
   public boolean _cg154;
+  public boolean _cg158;
+  public boolean _cg156;
   public boolean _cg159;
-  public boolean _cg164;
+  public boolean _cg160;
+  public boolean _cg165;
   public boolean _cg162;
   public boolean _cg166;
+  public boolean _cg168;
+  public boolean _cg164;
   public boolean _cg169;
-  public boolean _cg173;
-  public boolean _cg171;
-  public boolean _cg179;
-  public boolean _cg176;
+  public boolean _cg174;
+  public boolean _cg172;
+  public boolean _cg178;
+  public boolean _cg182;
   public boolean _cg180;
-  public boolean _g36_e1;
-  public boolean _g44_e2;
-  public boolean _g51_e1;
-  public boolean _g61_e2;
+  public boolean _cg188;
+  public boolean _cg185;
+  public boolean _cg189;
+  public boolean _g50_e1;
+  public boolean _g58_e2;
+  public boolean _g65_e1;
+  public boolean _g75_e2;
   public boolean _TERM;
 
   public pacemaker() {
-    _taken_transitions = new int[21];
+    _taken_transitions = new int[20];
   }
   public boolean _pg3;
-  public boolean _pg46;
-  public boolean _pg73;
-  public boolean _pg44;
-  public boolean _pg45;
   public boolean _pg68;
-  public boolean _pg115;
-  public boolean _pg84;
-  public boolean _pg19;
-  public boolean _pg15;
-  public boolean _pg9;
-  public boolean _pg42;
-  public boolean _pg32;
-  public boolean _pg38;
-  public boolean _pg103;
-  public boolean _pg96;
-  public boolean _pg134;
-  public boolean _pg127;
+  public boolean _pg89;
+  public boolean _pg58;
+  public boolean _pg59;
+  public boolean _pg78;
+  public boolean _pg100;
+  public boolean _pg16;
+  public boolean _pg10;
+  public boolean _pg6;
+  public boolean _pg211;
+  public boolean _pg27;
+  public boolean _pg21;
+  public boolean _pg56;
+  public boolean _pg46;
+  public boolean _pg52;
+  public boolean _pg119;
+  public boolean _pg112;
 
   public void reset() {
     _GO = true;
@@ -195,6 +212,8 @@ public class pacemaker {
     _region0_null_x = 0;
     deltaT = 0.0;
     sleepT = 0.0;
+    _reg_VP = false;
+    _reg_VS = false;
     _taken_transitions[0] = 0;
     _taken_transitions[1] = 0;
     _taken_transitions[2] = 0;
@@ -215,75 +234,74 @@ public class pacemaker {
     _taken_transitions[17] = 0;
     _taken_transitions[18] = 0;
     _taken_transitions[19] = 0;
-    _taken_transitions[20] = 0;
     _pg3 = false;
-    _pg46 = false;
-    _pg73 = false;
-    _pg44 = false;
-    _pg45 = false;
     _pg68 = false;
-    _pg115 = false;
-    _pg84 = false;
-    _pg19 = false;
-    _pg15 = false;
-    _pg9 = false;
-    _pg42 = false;
-    _pg32 = false;
-    _pg38 = false;
-    _pg103 = false;
-    _pg96 = false;
-    _pg134 = false;
-    _pg127 = false;
+    _pg89 = false;
+    _pg58 = false;
+    _pg59 = false;
+    _pg78 = false;
+    _pg100 = false;
+    _pg16 = false;
+    _pg10 = false;
+    _pg6 = false;
+    _pg211 = false;
+    _pg27 = false;
+    _pg21 = false;
+    _pg56 = false;
+    _pg46 = false;
+    _pg52 = false;
+    _pg119 = false;
+    _pg112 = false;
   }
 
   public void logic() {
     _g4 = _pg3;
-    _g73 = _g4 && !AS;
-    _g3 = _GO || _g73 && !VS;
+    _g89 = _g4 && !AS;
+    _g3 = _GO || _g89 && !VS;
     _g4 = _g4 && AS;
     if (_g4) {
       _taken_transitions[0] += 1;
     }
-    _g190 = _pg46;
-    if (_g190) {
+    _g199 = _pg68;
+    if (_g199) {
       _region0_null_x += deltaT;
     }
-    _g56 = _pg73;
-    _g50 = _pg44;
-    _g51_e1 = !(_g56 || _g50);
-    _g60 = _pg45;
-    _g62 = _g60 && !AS;
-    _cg62 = _region0_null_x >= 8;
-    _g63 = _g62 && _cg62;
-    if (_g63) {
-      _pacemaker_local__Atrig3 = true;
+    _g70 = _pg89;
+    _g64 = _pg58;
+    _g65_e1 = !(_g70 || _g64);
+    _g74 = _pg59;
+    _g76 = _g74 && !AS;
+    _cg76 = _region0_null_x >= 8;
+    _g77 = _g76 && _cg76;
+    if (_g77) {
+      _pacemaker_local__Atrig4 = true;
     }
     sleepT = 1000.0;
-    _g52 = _g50 && !AS || _g56 && !AS;
-    _cg52 = _region0_null_x < 8.0;
-    _g53 = _g52 && _cg52;
-    if (_g53) {
+    _g66 = _g64 && !AS || _g70 && !AS;
+    _cg66 = _region0_null_x < 8.0;
+    _g67 = _g66 && _cg66;
+    if (_g67) {
       sleepT = (sleepT < (8.0 - _region0_null_x)) ? sleepT : (8.0 - _region0_null_x);
     }
-    _cg53 = _pacemaker_local__Atrig3;
-    _g52 = _g52 && !_cg52;
-    _cg54 = _pacemaker_local__Atrig3;
-    _g56 = _g50 && AS || _g53 && _cg53 || _g52 && _cg54 || _g56 && AS;
-    _g50 = !_g60;
-    _g63 = _g60 && AS || _g63;
-    _g60 = (_g51_e1 || _g56) && (_g50 || _g63) && (_g56 || _g63);
-    _g51 = _g60 && !AS;
-    if (_g51) {
-      _taken_transitions[10] += 1;
+    _cg67 = _pacemaker_local__Atrig4;
+    _g66 = _g66 && !_cg66;
+    _cg68 = _pacemaker_local__Atrig4;
+    _g70 = _g64 && AS || _g67 && _cg67 || _g66 && _cg68 || _g70 && AS;
+    _g64 = !_g74;
+    _g77 = _g74 && AS || _g77;
+    _g74 = (_g65_e1 || _g70) && (_g64 || _g77) && (_g70 || _g77);
+    _g65_e1 = _g74 && !AS;
+    if (_g65_e1) {
+      _taken_transitions[11] += 1;
     }
-    _g51_e1 = _g60 && AS || _g51;
-    _g61_e2 = _g51_e1 && AS;
-    if (_g61_e2) {
-      _taken_transitions[8] += 1;
+    _g75 = _g74 && AS || _g65_e1;
+    _g65 = _g75 && AS;
+    if (_g65) {
+      _taken_transitions[9] += 1;
     }
-    _g61 = _pg68;
-    _g68 = _GO || _g61;
-    if (_g68) {
+    _g75_e2 = _pg78;
+    _g78 = _GO || _g75_e2;
+    if (_g78) {
       VRP_ACTIVE = false;
       URI_ACTIVE = false;
       PVARP_ACTIVE = false;
@@ -291,138 +309,129 @@ public class pacemaker {
       AP = false;
       VP = false;
     }
-    _g64 = _g51_e1 && !AS;
-    if (_g64) {
+    _g82 = _g75 && !AS;
+    if (_g82) {
       AP |= true;
-      _taken_transitions[9] += 1;
+      _taken_transitions[10] += 1;
     }
-    _g198 = _g4 || _g61_e2 || _g64;
-    if (_g198) {
+    _g207 = _g4 || _g65 || _g82;
+    if (_g207) {
       _region0_null_x = 0;
-      _pacemaker_local__Atrig = false;
-      _pacemaker_local__Atrig1 = false;
     }
-    _cg7 = _region0_null_x < 3.0;
-    _g65 = _g198 && _cg7;
-    if (_g65) {
-      sleepT = (sleepT < (3.0 - _region0_null_x)) ? sleepT : (3.0 - _region0_null_x);
-    }
-    _cg8 = _pacemaker_local__Atrig || _pacemaker_local__Atrig1;
-    _g66 = _pg115;
-    if (_g66) {
-      URI_ACTIVE |= true;
-    }
-    _g5 = _pg84;
-    if (_g5) {
+    _g79 = _pg100;
+    if (_g79) {
       VRP_ACTIVE |= true;
     }
-    _g67 = _pg19;
-    _cg20 = (VS || VP) && !VRP_ACTIVE;
-    _g6 = _g67 && !_cg20;
-    _cg22 = _region0_null_x >= 3 && !URI_ACTIVE;
-    _g8 = _g6 && _cg22;
-    if (_g8) {
-      _pacemaker_local__Atrig = true;
+    _g5 = _pg16;
+    _g80 = _pg10;
+    _cg11 = (VS || VP) && !VRP_ACTIVE;
+    _g81 = _pg6;
+    _g6 = _GO || _g81;
+    if (_g6) {
+      _pre_VP = _reg_VP;
     }
-    _g116 = _pg15;
-    _g85 = _pg9;
-    _cg10 = (VS || VP) && !VRP_ACTIVE;
-    _cg16 = (VS || VP) && !VRP_ACTIVE;
-    _g20 = _g85 && !_cg10 || _g116 && !_cg16;
-    _cg12 = _region0_null_x < 3.0;
-    _g22 = _g20 && _cg12;
+    _g101 = _pg211;
+    _g211 = _GO || _g101;
+    if (_g211) {
+      _pre_VS = _reg_VS;
+      _reg_VS = VS;
+    }
+    _cg32 = (VS || VP) && !VRP_ACTIVE;
+    _cg17 = (VS || VP) && !VRP_ACTIVE;
+    _g215 = _g80 && !_cg11 || _g5 && !_cg17;
+    _cg13 = _region0_null_x < 3.0;
+    _g11 = _g215 && _cg13;
+    if (_g11) {
+      sleepT = (sleepT < (3.0 - _region0_null_x)) ? sleepT : (3.0 - _region0_null_x);
+    }
+    _g17 = _pg27;
+    _g13 = _pg21;
+    _cg22 = (VS || VP) && !VRP_ACTIVE;
+    _cg28 = (VS || VP) && !VRP_ACTIVE;
+    _g14 = _g13 && !_cg22 || _g17 && !_cg28;
+    _cg24 = _region0_null_x < 3.0;
+    _g22 = _g14 && _cg24;
     if (_g22) {
       sleepT = (sleepT < (3.0 - _region0_null_x)) ? sleepT : (3.0 - _region0_null_x);
     }
-    _cg17 = _pacemaker_local__Atrig || _pacemaker_local__Atrig1;
-    _g23 = _pg42;
-    _cg43 = _region0_null_x >= 5;
-    _g16 = _g23 && _cg43;
-    if (_g16) {
-      _pacemaker_local__Atrig2 = true;
+    _g28 = _pg56;
+    _cg57 = _region0_null_x >= 5;
+    _g24 = _g28 && _cg57;
+    if (_g24) {
+      _pacemaker_local__Atrig3 = true;
     }
-    _g10 = _pg32;
-    _g12 = _pg38;
-    _g13 = _g10 || _g12;
-    _cg34 = _region0_null_x < 5.0;
-    _g35 = _g13 && _cg34;
-    if (_g35) {
+    _g25 = _pg46;
+    _g53 = _pg52;
+    _g48 = _g25 || _g53;
+    _cg48 = _region0_null_x < 5.0;
+    _g49 = _g48 && _cg48;
+    if (_g49) {
       sleepT = (sleepT < (5.0 - _region0_null_x)) ? sleepT : (5.0 - _region0_null_x);
     }
-    _cg35 = _pacemaker_local__Atrig2;
-    _g34 = _g13 && !_cg34;
-    _cg37 = _pacemaker_local__Atrig2;
-    _g37 = _g35 && _cg35 || _g34 && _cg37;
-    _g35 = !(_g12 || _g10);
-    _g33 = !_g23;
-    _g39 = (_g35 || _g37) && (_g33 || _g16) && (_g37 || _g16);
-    if (_g39) {
+    _cg49 = _pacemaker_local__Atrig3;
+    _g48 = _g48 && !_cg48;
+    _cg51 = _pacemaker_local__Atrig3;
+    _g51 = _g49 && _cg49 || _g48 && _cg51;
+    _g49 = !(_g53 || _g25);
+    _g53 = !_g28;
+    _g47 = (_g49 || _g51) && (_g53 || _g24) && (_g51 || _g24);
+    if (_g47) {
+      _taken_transitions[8] += 1;
       _taken_transitions[7] += 1;
-      _taken_transitions[6] += 1;
     }
-    _g43 = _g73 && VS;
-    if (_g43) {
+    _g57 = _g89 && VS;
+    if (_g57) {
       _taken_transitions[1] += 1;
     }
-    _g36_e1 = _g39 || _g43;
-    if (_g36_e1) {
-      _pacemaker_local__Atrig3 = false;
+    _g58_e2 = _g47 || _g57;
+    if (_g58_e2) {
+      _pacemaker_local__Atrig4 = false;
     }
-    _cg47 = _region0_null_x < 8.0;
-    _g44_e2 = _g36_e1 && _cg47;
-    if (_g44_e2) {
+    _cg61 = _region0_null_x < 8.0;
+    _g50_e1 = _g58_e2 && _cg61;
+    if (_g50_e1) {
       sleepT = (sleepT < (8.0 - _region0_null_x)) ? sleepT : (8.0 - _region0_null_x);
     }
-    _cg48 = _pacemaker_local__Atrig3;
-    _g44 = _g44_e2 && !_cg48 || _g53 && !_cg53;
-    _g36 = _g36_e1 && !_cg47;
-    _cg57 = _pacemaker_local__Atrig3;
-    _g73 = _g52 && !_cg54 || _g36 && !_cg57;
-    _g45 = _g36_e1 || _g62 && !_cg62;
-    _g74 = _pg103;
-    if (_g74) {
+    _cg62 = _pacemaker_local__Atrig4;
+    _g58 = _g50_e1 && !_cg62 || _g67 && !_cg67;
+    _g50 = _g58_e2 && !_cg61;
+    _cg71 = _pacemaker_local__Atrig4;
+    _g89 = _g66 && !_cg68 || _g50 && !_cg71;
+    _g59 = _g58_e2 || _g76 && !_cg76;
+    _g90 = _pg119;
+    if (_g90) {
       _pacemaker_local_x += deltaT;
     }
-    _g48 = _pg96;
-    _cg97 = _pacemaker_local_x >= 15;
-    _g53 = _g48 && _cg97;
-    if (_g53) {
-      _pacemaker_local__Atrig4 = true;
-    }
-    _g57 = _pg134;
-    if (_g57) {
-      _pacemaker_local_x1 += deltaT;
-    }
-    _g54 = _pg127;
-    _cg128 = _pacemaker_local_x1 >= 9;
-    _g62 = _g54 && _cg128;
-    if (_g62) {
+    _g62 = _pg112;
+    _cg113 = _pacemaker_local_x >= 15;
+    _g67 = _g62 && _cg113;
+    if (_g67) {
       _pacemaker_local__Atrig5 = true;
     }
-    _g46 = _GO || _g190;
+    _g68 = _GO || _g199;
   }
 
   public void tick() {
     logic();
 
     _pg3 = _g3;
-    _pg46 = _g46;
-    _pg73 = _g73;
-    _pg44 = _g44;
-    _pg45 = _g45;
     _pg68 = _g68;
-    _pg115 = _g115;
-    _pg84 = _g84;
-    _pg19 = _g19;
-    _pg15 = _g15;
-    _pg9 = _g9;
-    _pg42 = _g42;
-    _pg32 = _g32;
-    _pg38 = _g38;
-    _pg103 = _g103;
-    _pg96 = _g96;
-    _pg134 = _g134;
-    _pg127 = _g127;
+    _pg89 = _g89;
+    _pg58 = _g58;
+    _pg59 = _g59;
+    _pg78 = _g78;
+    _pg100 = _g100;
+    _pg16 = _g16;
+    _pg10 = _g10;
+    _pg6 = _g6;
+    _pg211 = _g211;
+    _pg27 = _g27;
+    _pg21 = _g21;
+    _pg56 = _g56;
+    _pg46 = _g46;
+    _pg52 = _g52;
+    _pg119 = _g119;
+    _pg112 = _g112;
     _GO = false;
   }
 }

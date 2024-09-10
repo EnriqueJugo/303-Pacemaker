@@ -94,7 +94,8 @@ scchart pacemaker {
         final state done
       }
     }
-    if pre(VS) || pre(VP) abort to URI_LRI // pre abort not working:  if VS || VP pre abort to URI_LRI
+    // want to abort to URI_LRI only when URI_ATIVE is not on??????? Check with Enri
+    if (pre(VS) || pre(VP)) abort to URI_LRI // pre abort not working:  if VS || VP pre abort to URI_LRI
     join to idle
   }
 }
