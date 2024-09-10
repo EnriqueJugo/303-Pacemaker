@@ -5,16 +5,26 @@
 @ClocksUseSD
 scchart pacemaker {
   
+  // https://us.nallen.me/cs303/
+  const int AVI_VALUE = 3 // 300
+  const int AEI_VALUE = 8 // 800
+  const int PVARP_VALUE = 5 // 50
+  const int VRP_VALUE = 15 // 150
+  const int LRI_VALUE = 10 // 950
+  const int URI_VALUE = 9 //900
+
   input signal AS, VS
   signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE
+  //output signal AP, VP
+  
   output signal AP, VP
   
   region "Atrium Actions"{
     clock x = 0
     
     initial state idle 
-    if AS go to aa
-    if VS go to va
+    if AS || AP go to aa
+    if VS || VP go to va
 
     state aa "Atrial Active" {
       entry do x = 0 // on entry set 
@@ -43,9 +53,10 @@ scchart pacemaker {
 
    
    state va "Ventricle Active" {
+     entry do x = 0
      region "AEI" {
        initial state active
-       if x >= `AEI_VALUE` go to done
+       if x >= `AEI_VALUE` - `PVARP_VALUE` go to done
        final state done
      }
    }
@@ -79,7 +90,7 @@ scchart pacemaker {
         initial state URIa {
           during do URI_ACTIVE
         }
-        if x >= `URI_VALUE` go to LRIa
+        if x >= URI_VALUE go to LRIa
         
         state LRIa{
           during do LRI_ACTIVE

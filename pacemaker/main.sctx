@@ -1,6 +1,6 @@
 @ClocksUseSD
 scchart pacemaker {
-
+  
   // https://us.nallen.me/cs303/
   const int AVI_VALUE = 3 // 300
   const int AEI_VALUE = 8 // 800
@@ -8,17 +8,19 @@ scchart pacemaker {
   const int VRP_VALUE = 15 // 150
   const int LRI_VALUE = 10 // 950
   const int URI_VALUE = 9 //900
-  
+
   input signal AS, VS
   signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE
+  //output signal AP, VP
+  
   output signal AP, VP
   
   region "Atrium Actions"{
     clock x = 0
     
     initial state idle 
-    if AS go to aa
-    if VS go to va
+    if AS || AP go to aa
+    if VS || VP go to va
 
     state aa "Atrial Active" {
       entry do x = 0 // on entry set 
@@ -27,8 +29,7 @@ scchart pacemaker {
         initial state active
         if URI_ACTIVE go to active
         if x >= AVI_VALUE go to done
-         // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
-        if !(x >= AVI_VALUE) && !LRI_ACTIVE go to done // if x < AVI_VALUE && !LRI_ACTIVE go to done // Nathan's code says "<" doesnt work.........
+        if !(x >= AVI_VALUE) && !LRI_ACTIVE go to done // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
         final state done
         
       }
@@ -48,9 +49,10 @@ scchart pacemaker {
 
    
    state va "Ventricle Active" {
+     entry do x = 0
      region "AEI" {
        initial state active
-       if x >= AEI_VALUE go to done
+       if x >= AEI_VALUE - PVARP_VALUE go to done
        final state done
      }
    }
@@ -94,8 +96,7 @@ scchart pacemaker {
         final state done
       }
     }
-    // want to abort to URI_LRI only when URI_ATIVE is not on??????? Check with Enri
-    if (pre(VS) || pre(VP)) abort to URI_LRI // pre abort not working:  if VS || VP pre abort to URI_LRI
-    join to idle
+    if (pre(VS) || pre(VP)) abort to URI_LRI // if pre(VS) || pre(VP) abort to URI_LRI
+    do VP join to URI_LRI
   }
 }
