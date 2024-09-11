@@ -23,31 +23,41 @@ scchart pacemaker {
     clock x = 0
     initial state idle
         
-    if AS || AP  go to active
+    if AS || AP go to active
     
     state active{
-      clock x = 0
+      entry do x = 0
     }
-    
-    if VS && !VRP_ACTIVE abort to idle
-    if URI_ACTIVE go to active
-    if x >= `AVI_VALUE`do VP go to idle
+    if VS || pre(VP) && !VRP_ACTIVE abort to idle
+    if x >= `AVI_VALUE` && !URI_ACTIVE do VP go to idle
   }
   
-  region "PVARP_AEI"{
+  region "PVARP"{
     clock x = 0
     initial state idle
-    if VS || VP go to pvarp_active
-    state pvarp_active{
+    if VS || VP go to active
+    state active{
+      entry do x = 0
+      during do PVARP_ACTIVE
+    }
+    
+    if x >= `PVARP_VALUE` go to idle
+  }
+  
+  region "AEI"{
+    clock x = 0
+    
+    initial state idle
+    
+    if VS || VP go to active
+    
+    state active{
       entry do x = 0
     }
     
-    if x >= `PVARP_VALUE` go to aei_active
-    state aei_active
-    
-    if AS abort to idle
+    if AS && !PVARP_ACTIVE abort to idle
     if x >= `AEI_VALUE` do AP go to idle
-  }
+   }
   
   region "Ventricle Actions" {
     initial state idle
@@ -65,23 +75,17 @@ scchart pacemaker {
     join to idle
   }
   
-    region "URI" {
+    region "URI"{
     initial state idle
     if VS || VP go to URI_ACTIVE
-    state URI_ACTIVE {
+
+    state URI_ACTIVE{
       clock x = 0
-      
-      region{
-        initial state active {
-//          entry do x = 0
-          during do URI_ACTIVE
-        }
-        if x >= `URI_VALUE` go to done
-        
-        final state done
-      }
+      during do URI_ACTIVE
+
     }
-    join to idle
+    if x >= URI_VALUE go to idle
+ 
   }
   
   region "LRI"{
