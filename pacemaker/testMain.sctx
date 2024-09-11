@@ -12,56 +12,41 @@ scchart pacemaker {
   const int VRP_VALUE = 15 // 150
   const int LRI_VALUE = 10 // 950
   const int URI_VALUE = 9 //900
+ 
 
   input signal AS, VS
   signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE
-  //output signal AP, VP
   
   output signal AP, VP
   
-  region "Atrium Actions"{
+  region "AVI"{
     clock x = 0
-    
-    initial state idle 
-    if AS || AP go to aa
-    if VS || VP go to va
-
-    state aa "Atrial Active" {
-      entry do x = 0 // on entry set 
-      
-      region "AVI" {
-        initial state active
-        if URI_ACTIVE go to active
-        if x >= `AVI_VALUE` go to done
-        if !(x >= `AVI_VALUE`) && !LRI_ACTIVE go to done // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
-        final state done
+    initial state idle
         
-      }
-    }
-    if ((VS || VP) && !VRP_ACTIVE) abort to delay
-    do VP join to delay
+    if AS || AP  go to active
     
-   state delay {
-     entry do x = 0
-     region "PVARP" {
-       initial state active
-       if x >= `PVARP_VALUE` go to done
-       final state done
-     }
-   }
-   join to va
-
-   
-   state va "Ventricle Active" {
-     entry do x = 0
-     region "AEI" {
-       initial state active
-       if x >= `AEI_VALUE` - `PVARP_VALUE` go to done
-       final state done
-     }
-   }
-   if AS abort to aa
-   do AP join to aa
+    state active{
+      clock x = 0
+    }
+    
+    if VS && !VRP_ACTIVE abort to idle
+    if URI_ACTIVE go to active
+    if x >= `AVI_VALUE`do VP go to idle
+  }
+  
+  region "PVARP_AEI"{
+    clock x = 0
+    initial state idle
+    if VS || VP go to pvarp_active
+    state pvarp_active{
+      entry do x = 0
+    }
+    
+    if x >= `PVARP_VALUE` go to aei_active
+    state aei_active
+    
+    if AS abort to idle
+    if x >= `AEI_VALUE` do AP go to idle
   }
   
   region "Ventricle Actions" {
@@ -80,27 +65,40 @@ scchart pacemaker {
     join to idle
   }
   
-    region "URI and LRI Ventricle Actions" {
+    region "URI" {
     initial state idle
-    if VS || VP go to URI_LRI
-    state URI_LRI {
+    if VS || VP go to URI_ACTIVE
+    state URI_ACTIVE {
       clock x = 0
       
-      region "URI LRI" {
-        initial state URIa {
+      region{
+        initial state active {
+//          entry do x = 0
           during do URI_ACTIVE
         }
-        if x >= URI_VALUE go to LRIa
+        if x >= `URI_VALUE` go to done
         
-        state LRIa{
-          during do LRI_ACTIVE
-        }
-        
-        if x >= `LRI_VALUE` go to done
         final state done
       }
     }
-    if (pre(VS) || pre(VP)) abort to URI_LRI // if pre(VS) || pre(VP) abort to URI_LRI
-    do VP join to URI_LRI
+    join to idle
+  }
+  
+  region "LRI"{
+    initial state idle
+    if VP || VS go to LRI_ACTIVE
+    state LRI_ACTIVE{
+      clock x = 0
+      region{
+        initial state active{
+//          entry do x = 0
+          during do LRI_ACTIVE
+        }
+        if x >= `LRI_VALUE` go to done
+          final state done
+      }
+    }
+    if VP || VS abort to LRI_ACTIVE
+    do VP join to LRI_ACTIVE
   }
 }
