@@ -1,3 +1,7 @@
+#resource "timing.h"
+#hostcode-c "#include \"timing.h\""
+#hostcode-c "#include <stdio.h>"
+// https://us.nallen.me/cs303/
 @ClocksUseSD
 scchart pacemaker {
   
@@ -28,8 +32,8 @@ scchart pacemaker {
       region "AVI" {
         initial state active
         if URI_ACTIVE go to active
-        if x >= AVI_VALUE go to done
-        if !(x >= AVI_VALUE) && !LRI_ACTIVE go to done // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
+        if x >= `AVI_VALUE` go to done
+        //if !(x >= `AVI_VALUE`) && !LRI_ACTIVE go to done // SPECIAL CASE IF AVI + AEI < LRI         if x < AVI_VALUE && !LRI_ACTIVE go to done
         final state done
         
       }
@@ -41,7 +45,7 @@ scchart pacemaker {
      entry do x = 0
      region "PVARP" {
        initial state active
-       if x >= PVARP_VALUE go to done
+       if x >= `PVARP_VALUE` go to done
        final state done
      }
    }
@@ -52,7 +56,7 @@ scchart pacemaker {
      entry do x = 0
      region "AEI" {
        initial state active
-       if x >= AEI_VALUE - PVARP_VALUE go to done
+       if x >= `AEI_VALUE` - `PVARP_VALUE` go to done
        final state done
      }
    }
@@ -69,7 +73,7 @@ scchart pacemaker {
         initial state active {
           during do VRP_ACTIVE
         }
-        if x >= VRP_VALUE go to done
+        if x >= `VRP_VALUE` go to done
         final state done
       }
     }
@@ -92,7 +96,7 @@ scchart pacemaker {
           during do LRI_ACTIVE
         }
         
-        if x >= LRI_VALUE go to done
+        if x >= `LRI_VALUE` go to done
         final state done
       }
     }
