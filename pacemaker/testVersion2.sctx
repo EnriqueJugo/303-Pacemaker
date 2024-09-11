@@ -4,14 +4,12 @@
 // https://us.nallen.me/cs303/
 @ClocksUseSD
 scchart pacemaker {
-  
-  // https://us.nallen.me/cs303/
-  const int AVI_VALUE = 300
-  const int AEI_VALUE = 800
-  const int PVARP_VALUE = 50
-  const int VRP_VALUE = 150
-  const int LRI_VALUE = 950
-  const int URI_VALUE = 900
+//   const int AVI_VALUE = 3 // 300
+//   const int AEI_VALUE = 8 // 800
+//   const int PVARP_VALUE = 5 // 50
+//   const int VRP_VALUE = 15 // 150
+//   const int LRI_VALUE = 10 // 950
+//   const int URI_VALUE = 9 //900
 
   input signal AS, VS
   signal VRP_ACTIVE, URI_ACTIVE, PVARP_ACTIVE, LRI_ACTIVE
@@ -38,7 +36,7 @@ scchart pacemaker {
         
       }
     }
-    if ((VS) && !VRP_ACTIVE) abort to delay
+    if ((VS || pre(VP)) && !VRP_ACTIVE) abort to delay
     do VP join to delay
     
    state delay {
@@ -79,28 +77,63 @@ scchart pacemaker {
     }
     join to idle
   }
-  
-    region "URI and LRI Ventricle Actions" {
+
+  region "URI" {
     initial state idle
     if VS || VP go to URI_LRI
     state URI_LRI {
       clock x = 0
-      
-      region "URI LRI" {
-        initial state URIa {
+
+      region{
+        initial state active {
           during do URI_ACTIVE
         }
-        if x >= URI_VALUE go to LRIa
-        
-        state LRIa{
-          during do LRI_ACTIVE
-        }
-        
-        if x >= `LRI_VALUE` go to done
+        if x >= `URI_VALUE` go to done
+
         final state done
       }
     }
-    if (pre(VS) || pre(VP)) abort to URI_LRI // if pre(VS) || pre(VP) abort to URI_LRI
-    do VP join to URI_LRI
+    join to idle
   }
+
+  region "LRI"{
+    initial state idle
+    if VP || VS go to LRI_ACTIVE
+    state LRI_ACTIVE{
+      clock x = 0
+      region{
+        initial state active{
+          during do LRI_ACTIVE
+        }
+        if x >= `LRI_VALUE` go to done
+          final state done
+      }
+    }
+    if VP || VS go to LRI_ACTIVE
+    do VP join to LRI_ACTIVE
+  }
+  
+//     region "URI and LRI Ventricle Actions" {
+//     initial state idle
+//     if VS || VP go to URI_LRI
+//     state URI_LRI {
+//       clock x = 0
+      
+//       region "URI LRI" {
+//         initial state URIa {
+//           during do URI_ACTIVE
+//         }
+//         if x >= URI_VALUE go to LRIa
+        
+//         state LRIa{
+//           during do LRI_ACTIVE
+//         }
+        
+//         if x >= LRI_VALUE go to done
+//         final state done
+//       }
+//     }
+//     if (pre(VS) || pre(VP)) abort to URI_LRI // if pre(VS) || pre(VP) abort to URI_LRI
+//     do VP join to URI_LRI
+//   }
 }

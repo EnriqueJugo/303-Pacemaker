@@ -34,7 +34,7 @@ scchart pacemaker {
         
       }
     }
-    if ((VS || VP) && !VRP_ACTIVE) abort to delay
+    if ((VS || pre(VP)) && !VRP_ACTIVE) abort to delay
     do VP join to delay
     
    state delay {
@@ -75,28 +75,63 @@ scchart pacemaker {
     }
     join to idle
   }
-  
-    region "URI and LRI Ventricle Actions" {
+
+  region "URI" {
     initial state idle
-    if VS || VP go to URI_LRI
-    state URI_LRI {
+    if VS || VP go to URI_ACTIVE
+    state URI_ACTIVE{
       clock x = 0
-      
-      region "URI LRI" {
-        initial state URIa {
+
+      region{
+        initial state active {
           during do URI_ACTIVE
         }
-        if x >= URI_VALUE go to LRIa
-        
-        state LRIa{
-          during do LRI_ACTIVE
-        }
-        
-        if x >= LRI_VALUE go to done
+        if x >= URI_VALUE go to done
+
         final state done
       }
     }
-    if (pre(VS) || pre(VP)) abort to URI_LRI // if pre(VS) || pre(VP) abort to URI_LRI
-    do VP join to URI_LRI
+    join to idle
   }
+
+  region "LRI"{
+    initial state idle
+    if VP || VS go to LRI_ACTIVE
+    state LRI_ACTIVE{
+      clock x = 0
+      region{
+        initial state active{
+          during do LRI_ACTIVE
+        }
+        if x >= LRI_VALUE go to done
+          final state done
+      }
+    }
+    if VP || VS go to LRI_ACTIVE
+    do VP join to LRI_ACTIVE
+  }
+  
+//     region "URI and LRI Ventricle Actions" {
+//     initial state idle
+//     if VS || VP go to URI_LRI
+//     state URI_LRI {
+//       clock x = 0
+      
+//       region "URI LRI" {
+//         initial state URIa {
+//           during do URI_ACTIVE
+//         }
+//         if x >= URI_VALUE go to LRIa
+        
+//         state LRIa{
+//           during do LRI_ACTIVE
+//         }
+        
+//         if x >= LRI_VALUE go to done
+//         final state done
+//       }
+//     }
+//     if (pre(VS) || pre(VP)) abort to URI_LRI // if pre(VS) || pre(VP) abort to URI_LRI
+//     do VP join to URI_LRI
+//   }
 }

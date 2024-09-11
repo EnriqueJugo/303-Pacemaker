@@ -406,7 +406,7 @@ public class pacemaker {
     }
     _cg147 = _pacemaker_local__Atrig6;
     _g149 = _g147 && !_cg147;
-    _cg149 = _pacemaker_local_x1 >= 9;
+    _cg149 = _pacemaker_local_x1 >= 900;
     _g150 = _g149 && _cg149;
     if (_g150) {
       _pacemaker_local__Atrig7 = true;
@@ -422,10 +422,10 @@ public class pacemaker {
     sleepT = 1000.0;
     _cg143 = _pacemaker_local__Atrig6;
     _g139 = _g137 && !_cg137 || _g143 && !_cg143;
-    _cg139 = _pacemaker_local_x1 < 9.0;
+    _cg139 = _pacemaker_local_x1 < 900.0;
     _g140 = _g139 && _cg139;
     if (_g140) {
-      sleepT = (sleepT < (9.0 - _pacemaker_local_x1)) ? sleepT : (9.0 - _pacemaker_local_x1);
+      sleepT = (sleepT < (900.0 - _pacemaker_local_x1)) ? sleepT : (900.0 - _pacemaker_local_x1);
     }
     _cg140 = _pacemaker_local__Atrig7;
     _g139 = _g139 && !_cg139;
@@ -439,7 +439,7 @@ public class pacemaker {
     _cg156 = _pacemaker_local__Atrig6;
     _cg172 = _pacemaker_local__Atrig6;
     _g138 = _g172 && !_cg172;
-    _cg174 = _pacemaker_local_x1 >= 10;
+    _cg174 = _pacemaker_local_x1 >= 950;
     _g132_e1 = _g138 && _cg174;
     if (_g132_e1) {
       _pacemaker_local__Atrig8 = true;
@@ -454,10 +454,10 @@ public class pacemaker {
     _cg162 = _pacemaker_local__Atrig6;
     _cg168 = _pacemaker_local__Atrig6;
     _g156 = _g162 && !_cg162 || _g168 && !_cg168;
-    _cg164 = _pacemaker_local_x1 < 10.0;
+    _cg164 = _pacemaker_local_x1 < 950.0;
     _g165 = _g156 && _cg164;
     if (_g165) {
-      sleepT = (sleepT < (10.0 - _pacemaker_local_x1)) ? sleepT : (10.0 - _pacemaker_local_x1);
+      sleepT = (sleepT < (950.0 - _pacemaker_local_x1)) ? sleepT : (950.0 - _pacemaker_local_x1);
     }
     _cg165 = _pacemaker_local__Atrig8;
     _g164 = _g156 && !_cg164;
@@ -505,16 +505,16 @@ public class pacemaker {
     _g152 = !(_g187_e3 || _g152_e1);
     _g4 = _pg89;
     _g76 = _g4 && !AS;
-    _cg76 = _region0_null_x >= 8 - 5;
+    _cg76 = _region0_null_x >= 800 - 50;
     _g77 = _g76 && _cg76;
     if (_g77) {
       _pacemaker_local__Atrig4 = true;
     }
     _g66 = _g152_e1 && !AS || _g187_e3 && !AS;
-    _cg66 = _region0_null_x < 8 - 5;
+    _cg66 = _region0_null_x < 800 - 50;
     _g67 = _g66 && _cg66;
     if (_g67) {
-      sleepT = (sleepT < (8 - 5 - _region0_null_x)) ? sleepT : (8 - 5 - _region0_null_x);
+      sleepT = (sleepT < (800 - 50 - _region0_null_x)) ? sleepT : (800 - 50 - _region0_null_x);
     }
     _cg67 = _pacemaker_local__Atrig4;
     _g66 = _g66 && !_cg66;
@@ -558,23 +558,23 @@ public class pacemaker {
       _pacemaker_local__Atrig = true;
     }
     _g34 = _g34 && !_cg34;
-    _cg36 = _region0_null_x >= 3;
+    _cg36 = _region0_null_x >= 300;
     _g37 = _g34 && _cg36;
     if (_g37) {
       _pacemaker_local__Atrig1 = true;
     }
     _g36 = _g34 && !_cg36;
-    _cg38 = !(_region0_null_x >= 3) && !LRI_ACTIVE;
+    _cg38 = !(_region0_null_x >= 300) && !LRI_ACTIVE;
     _g39 = _g36 && _cg38;
     if (_g39) {
       _pacemaker_local__Atrig2 = true;
     }
     _cg17 = (VS || VP) && !VRP_ACTIVE;
     _g13 = _g80 && !_cg11 || _g79 && !_cg17;
-    _cg13 = _region0_null_x < 3.0;
+    _cg13 = _region0_null_x < 300.0;
     _g14 = _g13 && _cg13;
     if (_g14) {
-      sleepT = (sleepT < (3.0 - _region0_null_x)) ? sleepT : (3.0 - _region0_null_x);
+      sleepT = (sleepT < (300.0 - _region0_null_x)) ? sleepT : (300.0 - _region0_null_x);
     }
     _cg14 = _pacemaker_local__Atrig || _pacemaker_local__Atrig1 || _pacemaker_local__Atrig2;
     _g13 = _g13 && !_cg13;
@@ -586,10 +586,10 @@ public class pacemaker {
     _cg22 = (VS || VP) && !VRP_ACTIVE;
     _cg28 = (VS || VP) && !VRP_ACTIVE;
     _g24 = _g22 && !_cg22 || _g17 && !_cg28;
-    _cg24 = _region0_null_x < 3.0;
+    _cg24 = _region0_null_x < 300.0;
     _g25 = _g24 && _cg24;
     if (_g25) {
-      sleepT = (sleepT < (3.0 - _region0_null_x)) ? sleepT : (3.0 - _region0_null_x);
+      sleepT = (sleepT < (300.0 - _region0_null_x)) ? sleepT : (300.0 - _region0_null_x);
     }
     _cg25 = _pacemaker_local__Atrig || _pacemaker_local__Atrig1 || _pacemaker_local__Atrig2;
     _g24 = _g24 && !_cg24;
@@ -611,20 +611,20 @@ public class pacemaker {
       _pacemaker_local__Atrig1 = false;
       _pacemaker_local__Atrig2 = false;
     }
-    _cg8 = _region0_null_x < 3.0;
+    _cg8 = _region0_null_x < 300.0;
     _g23 = _g33 && _cg8;
     if (_g23) {
-      sleepT = (sleepT < (3.0 - _region0_null_x)) ? sleepT : (3.0 - _region0_null_x);
+      sleepT = (sleepT < (300.0 - _region0_null_x)) ? sleepT : (300.0 - _region0_null_x);
     }
     _cg9 = _pacemaker_local__Atrig || _pacemaker_local__Atrig1 || _pacemaker_local__Atrig2;
     _g12 = _g23 && !_cg9 || _g14 && !_cg14;
     _g23_e2 = _g33 && !_cg8;
     _cg18 = _pacemaker_local__Atrig || _pacemaker_local__Atrig1 || _pacemaker_local__Atrig2;
     _g12_e1 = _g13 && !_cg15 || _g23_e2 && !_cg18;
-    _cg19 = _region0_null_x < 3.0;
+    _cg19 = _region0_null_x < 300.0;
     _g33_e3 = _g33 && _cg19;
     if (_g33_e3) {
-      sleepT = (sleepT < (3.0 - _region0_null_x)) ? sleepT : (3.0 - _region0_null_x);
+      sleepT = (sleepT < (300.0 - _region0_null_x)) ? sleepT : (300.0 - _region0_null_x);
     }
     _cg20 = _pacemaker_local__Atrig || _pacemaker_local__Atrig1 || _pacemaker_local__Atrig2;
     _g85 = _g33_e3 && !_cg20 || _g25 && !_cg25;
@@ -658,14 +658,14 @@ public class pacemaker {
       _region0_null_x = 0;
       _pacemaker_local__Atrig3 = false;
     }
-    _cg44 = _region0_null_x < 5.0;
+    _cg44 = _region0_null_x < 50.0;
     _g7 = _g38 && _cg44;
     if (_g7) {
-      sleepT = (sleepT < (5.0 - _region0_null_x)) ? sleepT : (5.0 - _region0_null_x);
+      sleepT = (sleepT < (50.0 - _region0_null_x)) ? sleepT : (50.0 - _region0_null_x);
     }
     _cg45 = _pacemaker_local__Atrig3;
     _g84 = _pg51;
-    _cg57 = _region0_null_x >= 5;
+    _cg57 = _region0_null_x >= 50;
     _g86 = _g84 && _cg57;
     if (_g86) {
       _pacemaker_local__Atrig3 = true;
@@ -673,10 +673,10 @@ public class pacemaker {
     _g40 = _pg42;
     _g88 = _pg49;
     _g87 = _g40 || _g88;
-    _cg48 = _region0_null_x < 5.0;
+    _cg48 = _region0_null_x < 50.0;
     _g41 = _g87 && _cg48;
     if (_g41) {
-      sleepT = (sleepT < (5.0 - _region0_null_x)) ? sleepT : (5.0 - _region0_null_x);
+      sleepT = (sleepT < (50.0 - _region0_null_x)) ? sleepT : (50.0 - _region0_null_x);
     }
     _cg49 = _pacemaker_local__Atrig3;
     _g42 = _g7 && !_cg45 || _g41 && !_cg49;
@@ -703,10 +703,10 @@ public class pacemaker {
       _region0_null_x = 0;
       _pacemaker_local__Atrig4 = false;
     }
-    _cg61 = _region0_null_x < 8 - 5;
+    _cg61 = _region0_null_x < 800 - 50;
     _g58_e2 = _g57 && _cg61;
     if (_g58_e2) {
-      sleepT = (sleepT < (8 - 5 - _region0_null_x)) ? sleepT : (8 - 5 - _region0_null_x);
+      sleepT = (sleepT < (800 - 50 - _region0_null_x)) ? sleepT : (800 - 50 - _region0_null_x);
     }
     _cg62 = _pacemaker_local__Atrig4;
     _g50_e1 = _g58_e2 && !_cg62 || _g67 && !_cg67;
@@ -728,7 +728,7 @@ public class pacemaker {
       _pacemaker_local_x += deltaT;
     }
     _g67 = _pg68;
-    _cg113 = _pacemaker_local_x >= 15;
+    _cg113 = _pacemaker_local_x >= 150;
     _g68 = _g90 || _g67 && !_cg113;
     _g71 = _g67 && _cg113;
     if (_g71) {
@@ -740,13 +740,13 @@ public class pacemaker {
     _g113 = _pg106;
     _g101 = _pg109;
     _g110 = _g90 || _g113 || _g101;
-    _cg103 = _pacemaker_local_x < 15.0;
+    _cg103 = _pacemaker_local_x < 150.0;
     _g107 = _g110 && !_cg103;
     _cg108 = _pacemaker_local__Atrig5;
     _g109 = _g107 && !_cg108;
     _g103 = _g110 && _cg103;
     if (_g103) {
-      sleepT = (sleepT < (15.0 - _pacemaker_local_x)) ? sleepT : (15.0 - _pacemaker_local_x);
+      sleepT = (sleepT < (150.0 - _pacemaker_local_x)) ? sleepT : (150.0 - _pacemaker_local_x);
     }
     _cg104 = _pacemaker_local__Atrig5;
     _g106 = _g103 && !_cg104;
@@ -791,10 +791,10 @@ public class pacemaker {
     }
     _cg129 = _pacemaker_local__Atrig7;
     _g115 = _g115_e1 && !_cg129 || _g133 && !_cg133;
-    _cg134 = _pacemaker_local_x1 < 9.0;
+    _cg134 = _pacemaker_local_x1 < 900.0;
     _g121 = _g115_e1 && _cg134;
     if (_g121) {
-      sleepT = (sleepT < (9.0 - _pacemaker_local_x1)) ? sleepT : (9.0 - _pacemaker_local_x1);
+      sleepT = (sleepT < (900.0 - _pacemaker_local_x1)) ? sleepT : (900.0 - _pacemaker_local_x1);
     }
     _cg135 = _pacemaker_local__Atrig7;
     _g94 = _g121 && !_cg135 || _g140 && !_cg140;
@@ -809,10 +809,10 @@ public class pacemaker {
     }
     _cg154 = _pacemaker_local__Atrig8;
     _g191 = _g126 && !_cg154 || _g138_e2 && !_cg158;
-    _cg159 = _pacemaker_local_x1 < 10.0;
+    _cg159 = _pacemaker_local_x1 < 950.0;
     _g133 = _g126 && _cg159;
     if (_g133) {
-      sleepT = (sleepT < (10.0 - _pacemaker_local_x1)) ? sleepT : (10.0 - _pacemaker_local_x1);
+      sleepT = (sleepT < (950.0 - _pacemaker_local_x1)) ? sleepT : (950.0 - _pacemaker_local_x1);
     }
     _cg160 = _pacemaker_local__Atrig8;
     _g135 = _g133 && !_cg160 || _g165 && !_cg165;
