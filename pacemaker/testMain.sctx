@@ -28,7 +28,7 @@ scchart pacemaker {
     state active{
       entry do x = 0
     }
-    if VS || pre(VP) && !VRP_ACTIVE abort to idle
+    if VS && !VRP_ACTIVE abort to idle
     if x >= `AVI_VALUE` && !URI_ACTIVE do VP go to idle
   }
   
@@ -77,14 +77,20 @@ scchart pacemaker {
   
     region "URI"{
     initial state idle
-    if VS || VP go to URI_ACTIVE
-
+    if VP || VS go to URI_ACTIVE
     state URI_ACTIVE{
       clock x = 0
-      during do URI_ACTIVE
-
+      region{
+        initial state active{
+//          entry do x = 0
+          during do URI_ACTIVE
+        }
+        if x >= `URI_VALUE` go to done
+          final state done
+      }
     }
-    if x >= URI_VALUE go to idle
+    if VS abort to URI_ACTIVE
+    join to idle
  
   }
   
