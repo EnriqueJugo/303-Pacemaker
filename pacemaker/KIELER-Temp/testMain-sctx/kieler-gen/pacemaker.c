@@ -43,7 +43,7 @@ void logic(TickData* d) {
   d->_g19 = d->_pg7;
   d->_cg19 = d->VS && !d->VRP_ACTIVE;
   d->_g21 = d->_g19 && !d->_cg19;
-  d->_cg21 = d->_region0_null_x >= AVI_VALUE && !d->URI_ACTIVE;
+  d->_cg21 = d->_region0_null_x >= 300 && !d->URI_ACTIVE;
   d->_g22 = d->_g21 && d->_cg21;
   if (d->_g22) {
     d->_pacemaker_local__Atrig = 1;
@@ -51,10 +51,10 @@ void logic(TickData* d) {
   d->sleepT = 1000.0;
   d->_cg15 = d->VS && !d->VRP_ACTIVE;
   d->_g11 = d->_g9 && !d->_cg9 || d->_g15 && !d->_cg15;
-  d->_cg11 = d->_region0_null_x < AVI_VALUE;
+  d->_cg11 = d->_region0_null_x < 300.0;
   d->_g12 = d->_g11 && d->_cg11;
   if (d->_g12) {
-    d->sleepT = (d->sleepT < (AVI_VALUE - d->_region0_null_x)) ? d->sleepT : (AVI_VALUE - d->_region0_null_x);
+    d->sleepT = (d->sleepT < (300.0 - d->_region0_null_x)) ? d->sleepT : (300.0 - d->_region0_null_x);
   }
   d->_cg12 = d->_pacemaker_local__Atrig;
   d->_g11 = d->_g11 && !d->_cg11;
@@ -88,17 +88,17 @@ void logic(TickData* d) {
   d->_g68 = d->_pg73;
   d->_cg68 = d->AS && !d->PVARP_ACTIVE;
   d->_g70 = d->_g68 && !d->_cg68;
-  d->_cg70 = d->_region2_null_x >= AEI_VALUE;
+  d->_cg70 = d->_region2_null_x >= 900;
   d->_g71 = d->_g70 && d->_cg70;
   if (d->_g71) {
     d->_pacemaker_local__Atrig2 = 1;
   }
   d->_cg64 = d->AS && !d->PVARP_ACTIVE;
   d->_g60 = d->_g23 && !d->_cg58 || d->_g20_e2 && !d->_cg64;
-  d->_cg60 = d->_region2_null_x < AEI_VALUE;
+  d->_cg60 = d->_region2_null_x < 900.0;
   d->_g61 = d->_g60 && d->_cg60;
   if (d->_g61) {
-    d->sleepT = (d->sleepT < (AEI_VALUE - d->_region2_null_x)) ? d->sleepT : (AEI_VALUE - d->_region2_null_x);
+    d->sleepT = (d->sleepT < (900.0 - d->_region2_null_x)) ? d->sleepT : (900.0 - d->_region2_null_x);
   }
   d->_cg61 = d->_pacemaker_local__Atrig2;
   d->_g60 = d->_g60 && !d->_cg60;
@@ -122,10 +122,10 @@ void logic(TickData* d) {
     d->_region0_null_x = 0;
     d->_pacemaker_local__Atrig = 0;
   }
-  d->_cg6 = d->_region0_null_x < AVI_VALUE;
+  d->_cg6 = d->_region0_null_x < 300.0;
   d->_g24 = d->_g69 && d->_cg6;
   if (d->_g24) {
-    d->sleepT = (d->sleepT < (AVI_VALUE - d->_region0_null_x)) ? d->sleepT : (AVI_VALUE - d->_region0_null_x);
+    d->sleepT = (d->sleepT < (300.0 - d->_region0_null_x)) ? d->sleepT : (300.0 - d->_region0_null_x);
   }
   d->_cg7 = d->_pacemaker_local__Atrig;
   d->_g25 = d->_g24 && !d->_cg7 || d->_g12 && !d->_cg12;
@@ -138,7 +138,7 @@ void logic(TickData* d) {
     d->_region1_null_x += d->deltaT;
   }
   d->_g13 = d->_pg42;
-  d->_cg47 = d->_region1_null_x >= PVARP_VALUE;
+  d->_cg47 = d->_region1_null_x >= 50;
   d->_g5 = d->_g13 && d->_cg47;
   if (d->_g5) {
     d->_pacemaker_local__Atrig1 = 1;
@@ -164,7 +164,7 @@ void logic(TickData* d) {
   }
   d->_cg177 = d->_pacemaker_local__Atrig6;
   d->_g179 = d->_g21 && !d->_cg177;
-  d->_cg179 = d->_pacemaker_local_x2 >= LRI_VALUE;
+  d->_cg179 = d->_pacemaker_local_x2 >= 1100;
   d->_g180 = d->_g179 && d->_cg179;
   if (d->_g180) {
     d->_pacemaker_local__Atrig7 = 1;
@@ -179,10 +179,10 @@ void logic(TickData* d) {
   d->_cg167 = d->_pacemaker_local__Atrig6;
   d->_cg173 = d->_pacemaker_local__Atrig6;
   d->_g169 = d->_g167 && !d->_cg167 || d->_g173 && !d->_cg173;
-  d->_cg169 = d->_pacemaker_local_x2 < LRI_VALUE;
+  d->_cg169 = d->_pacemaker_local_x2 < 1100.0;
   d->_g170 = d->_g169 && d->_cg169;
   if (d->_g170) {
-    d->sleepT = (d->sleepT < (LRI_VALUE - d->_pacemaker_local_x2)) ? d->sleepT : (LRI_VALUE - d->_pacemaker_local_x2);
+    d->sleepT = (d->sleepT < (1100.0 - d->_pacemaker_local_x2)) ? d->sleepT : (1100.0 - d->_pacemaker_local_x2);
   }
   d->_cg170 = d->_pacemaker_local__Atrig7;
   d->_g169 = d->_g169 && !d->_cg169;
@@ -228,13 +228,13 @@ void logic(TickData* d) {
   d->_g187_e2 = d->_pg37;
   d->_g182_e1 = d->_pg44;
   d->_g35 = d->_g192 || d->_g187_e2 || d->_g182_e1;
-  d->_cg37 = d->_region1_null_x < PVARP_VALUE;
+  d->_cg37 = d->_region1_null_x < 50.0;
   d->_g32 = d->_g35 && !d->_cg37;
   d->_cg42 = d->_pacemaker_local__Atrig1;
   d->_g44 = d->_g32 && !d->_cg42;
   d->_g41 = d->_g35 && d->_cg37;
   if (d->_g41) {
-    d->sleepT = (d->sleepT < (PVARP_VALUE - d->_region1_null_x)) ? d->sleepT : (PVARP_VALUE - d->_region1_null_x);
+    d->sleepT = (d->sleepT < (50.0 - d->_region1_null_x)) ? d->sleepT : (50.0 - d->_region1_null_x);
   }
   d->_cg38 = d->_pacemaker_local__Atrig1;
   d->_g37 = d->_g41 && !d->_cg38;
@@ -260,10 +260,10 @@ void logic(TickData* d) {
     d->_region2_null_x = 0;
     d->_pacemaker_local__Atrig2 = 0;
   }
-  d->_cg55 = d->_region2_null_x < AEI_VALUE;
+  d->_cg55 = d->_region2_null_x < 900.0;
   d->_g33 = d->_g39_e2 && d->_cg55;
   if (d->_g33) {
-    d->sleepT = (d->sleepT < (AEI_VALUE - d->_region2_null_x)) ? d->sleepT : (AEI_VALUE - d->_region2_null_x);
+    d->sleepT = (d->sleepT < (900.0 - d->_region2_null_x)) ? d->sleepT : (900.0 - d->_region2_null_x);
   }
   d->_cg56 = d->_pacemaker_local__Atrig2;
   d->_g49 = d->_g33 && !d->_cg56 || d->_g61 && !d->_cg61;
@@ -285,7 +285,7 @@ void logic(TickData* d) {
     d->_pacemaker_local_x += d->deltaT;
   }
   d->_g61 = d->_pg62;
-  d->_cg97 = d->_pacemaker_local_x >= VRP_VALUE;
+  d->_cg97 = d->_pacemaker_local_x >= 150;
   d->_g62 = d->_g53 || d->_g61 && !d->_cg97;
   d->_g65 = d->_g61 && d->_cg97;
   if (d->_g65) {
@@ -297,13 +297,13 @@ void logic(TickData* d) {
   d->_g97 = d->_pg90;
   d->_g85 = d->_pg93;
   d->_g91 = d->_g53 || d->_g97 || d->_g85;
-  d->_cg87 = d->_pacemaker_local_x < VRP_VALUE;
+  d->_cg87 = d->_pacemaker_local_x < 150.0;
   d->_g94 = d->_g91 && !d->_cg87;
   d->_cg92 = d->_pacemaker_local__Atrig3;
   d->_g93 = d->_g94 && !d->_cg92;
   d->_g87 = d->_g91 && d->_cg87;
   if (d->_g87) {
-    d->sleepT = (d->sleepT < (VRP_VALUE - d->_pacemaker_local_x)) ? d->sleepT : (VRP_VALUE - d->_pacemaker_local_x);
+    d->sleepT = (d->sleepT < (150.0 - d->_pacemaker_local_x)) ? d->sleepT : (150.0 - d->_pacemaker_local_x);
   }
   d->_cg88 = d->_pacemaker_local__Atrig3;
   d->_g90 = d->_g87 && !d->_cg88;
@@ -341,7 +341,7 @@ void logic(TickData* d) {
   }
   d->_cg131 = d->_pacemaker_local__Atrig4;
   d->_g78 = d->_g104 && !d->_cg131;
-  d->_cg133 = d->_pacemaker_local_x1 >= URI_VALUE;
+  d->_cg133 = d->_pacemaker_local_x1 >= 600;
   d->_g134 = d->_g78 && d->_cg133;
   if (d->_g134) {
     d->_pacemaker_local__Atrig5 = 1;
@@ -352,10 +352,10 @@ void logic(TickData* d) {
   d->_cg121 = d->_pacemaker_local__Atrig4;
   d->_cg127 = d->_pacemaker_local__Atrig4;
   d->_g123 = d->_g102 && !d->_cg121 || d->_g101 && !d->_cg127;
-  d->_cg123 = d->_pacemaker_local_x1 < URI_VALUE;
+  d->_cg123 = d->_pacemaker_local_x1 < 600.0;
   d->_g124 = d->_g123 && d->_cg123;
   if (d->_g124) {
-    d->sleepT = (d->sleepT < (URI_VALUE - d->_pacemaker_local_x1)) ? d->sleepT : (URI_VALUE - d->_pacemaker_local_x1);
+    d->sleepT = (d->sleepT < (600.0 - d->_pacemaker_local_x1)) ? d->sleepT : (600.0 - d->_pacemaker_local_x1);
   }
   d->_cg124 = d->_pacemaker_local__Atrig5;
   d->_g123 = d->_g123 && !d->_cg123;
@@ -404,10 +404,10 @@ void logic(TickData* d) {
   }
   d->_cg113 = d->_pacemaker_local__Atrig5;
   d->_g136 = d->_g141_e2 && !d->_cg113 || d->_g117 && !d->_cg117;
-  d->_cg118 = d->_pacemaker_local_x1 < URI_VALUE;
+  d->_cg118 = d->_pacemaker_local_x1 < 600.0;
   d->_g147 = d->_g141_e2 && d->_cg118;
   if (d->_g147) {
-    d->sleepT = (d->sleepT < (URI_VALUE - d->_pacemaker_local_x1)) ? d->sleepT : (URI_VALUE - d->_pacemaker_local_x1);
+    d->sleepT = (d->sleepT < (600.0 - d->_pacemaker_local_x1)) ? d->sleepT : (600.0 - d->_pacemaker_local_x1);
   }
   d->_cg119 = d->_pacemaker_local__Atrig5;
   d->_g147_e3 = d->_g147 && !d->_cg119 || d->_g124 && !d->_cg124;
@@ -438,10 +438,10 @@ void logic(TickData* d) {
   }
   d->_cg159 = d->_pacemaker_local__Atrig7;
   d->_g133 = d->_g125 && !d->_cg159 || d->_g163 && !d->_cg163;
-  d->_cg164 = d->_pacemaker_local_x2 < LRI_VALUE;
+  d->_cg164 = d->_pacemaker_local_x2 < 1100.0;
   d->_g142 = d->_g125 && d->_cg164;
   if (d->_g142) {
-    d->sleepT = (d->sleepT < (LRI_VALUE - d->_pacemaker_local_x2)) ? d->sleepT : (LRI_VALUE - d->_pacemaker_local_x2);
+    d->sleepT = (d->sleepT < (1100.0 - d->_pacemaker_local_x2)) ? d->sleepT : (1100.0 - d->_pacemaker_local_x2);
   }
   d->_cg165 = d->_pacemaker_local__Atrig7;
   d->_g111 = d->_g142 && !d->_cg165 || d->_g170 && !d->_cg170;

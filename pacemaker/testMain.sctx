@@ -6,12 +6,12 @@
 scchart pacemaker {
   
   // https://us.nallen.me/cs303/
-  const int AVI_VALUE = 3 // 300
-  const int AEI_VALUE = 8 // 800
-  const int PVARP_VALUE = 5 // 50
-  const int VRP_VALUE = 15 // 150
-  const int LRI_VALUE = 10 // 950
-  const int URI_VALUE = 9 //900
+  const int AVI_VALUE = 300 // 300
+  const int AEI_VALUE = 900 // 800
+  const int PVARP_VALUE = 50 // 50
+  const int VRP_VALUE = 150 // 150
+  const int LRI_VALUE = 1100 // 950
+  const int URI_VALUE = 600 //900
  
 
   input signal AS, VS
@@ -28,7 +28,7 @@ scchart pacemaker {
     state active{
       entry do x = 0
     }
-    if VS && !VRP_ACTIVE abort to idle
+    if VS || pre(VP) && !VRP_ACTIVE abort to idle
     if x >= `AVI_VALUE` && !URI_ACTIVE do VP go to idle
   }
   
