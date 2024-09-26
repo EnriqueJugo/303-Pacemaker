@@ -1,6 +1,6 @@
-11:20:00 **** Build of configuration Nios II for project pacemaker_bsp ****
+15:02:55 **** Incremental Build of configuration Nios II for project pacemaker_bsp ****
 make all 
 [BSP build complete]
 
-11:20:01 Build Finished (took 758ms)
+15:02:57 Build Finished (took 1s.328ms)
 
