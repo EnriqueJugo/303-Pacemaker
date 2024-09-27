@@ -28,7 +28,7 @@
 alt_u32 timerISR(void* context){
 	int* timeCount = (int*) context;
 	(*timeCount)++;
-	return 100; // next time out is 100ms
+	return 200; // next time out is 100ms
 }
 
 void buttonISR(void* context, alt_u32 id){
@@ -72,23 +72,25 @@ int main()
 	  // update time
 	  data.deltaT = systemTime - prevTime;
 	  prevTime = systemTime;
+//	  printf("dt: %.10f\r\n", data.deltaT);
 
 	  // update inputs
-
+	  data.AS = button;
 	  tick(&data);
 
 	  // update outputs
-//	  if(data.n_pace){
-//		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x01);
-//	  } else {
-//		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
-//	  }
+	  if(data.VP){
+		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x01);
+		  printf("dt: %.10f\r\n", data.deltaT);
+	  } else {
+		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
+	  }
 
 	  if(button){
 		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
 		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x01);
-		  printf("System Shutting Down... Goodbye!\n");
-		  break;
+		  // printf("System Shutting Down... Goodbye!\n");
+		  // break;
 	  }
   }
 //  while(1);
