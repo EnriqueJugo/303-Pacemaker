@@ -22,110 +22,170 @@
 #include <sys/alt_alarm.h>
 #include <sys/alt_irq.h>
 #include <altera_avalon_pio_regs.h>
+#include <altera_avalon_uart_regs.h>
 
 #include "sccharts.h"
 
-alt_u32 timerISR(void* context){
-	int* timeCount = (int*) context;
+
+uint32_t uartDivisor = 433;
+
+alt_u32 timerISR(void *context)
+{
+	int *timeCount = (int *)context;
 	(*timeCount)++;
 	return 1; // next time out is 100ms
 }
 
-void buttonISR(void* context, alt_u32 id){
+void buttonISR(void *context, alt_u32 id)
+{
+	volatile int *temp = (volatile int *)context;
+	(*temp) = IORD_ALTERA_AVALON_PIO_EDGE_CAP(KEYS_BASE);
 	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEYS_BASE, 0);
-	printf("TRIGGER\r\n");
 }
+
 
 int main()
 {
-  printf("Hello from Nios II!\n");
-  // Button init
-  int button = 0;
-  void* buttonContext = (void*) &button;
-  IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEYS_BASE, 0);
-  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(KEYS_BASE, 0x7);
-  alt_irq_register(KEYS_IRQ,buttonContext, buttonISR);
+	// Button init
+	int button = 0;
+	void *buttonContext = (void *)&button;
+	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEYS_BASE, 0);
+	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(KEYS_BASE, 0x7);
+	alt_irq_register(KEYS_IRQ, buttonContext, buttonISR);
 
-  // SC Chart Init
-  TickData data;
-  reset(&data);
-  tick(&data); // init tick
-  // Timer Init
-  alt_alarm ticker;
-  uint64_t systemTime = 0;
-  void* timerContext = (void*) &systemTime;
-  alt_alarm_start(&ticker, 1, timerISR, timerContext);
-  uint64_t prevTime = 0;
+	// Register the ISR for UART
+	IOWR_ALTERA_AVALON_UART_DIVISOR(UART_BASE, uartDivisor);
 
-  // Reset LED
-  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x00);
+	// SC Chart Init
+	TickData data;
+	reset(&data);
+	tick(&data); // init tick
 
-  // Blocking UART
-  int choice;
-  printf("Enter anything to begin");
-  scanf("%x", &choice);
-  printf("Entered: %x\n", choice);
+	// Timer Init
+	alt_alarm ticker;
+	uint64_t systemTime = 0;
+	void *timerContext = (void *)&systemTime;
+	alt_alarm_start(&ticker, 1, timerISR, timerContext);
+	uint64_t prevTime = 0;
 
-  FILE *pUart;
-  pUart = fopen(UART_NAME, "r+");
-  while(1){
-	  // update time
-	  data.deltaT = systemTime - prevTime;
-	  prevTime = systemTime;
-	  button = IORD_ALTERA_AVALON_PIO_DATA(KEYS_BASE);
+	// Reset LED
+	IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x00);
 
-	  // update inputs
-	  data.AS = (~button & (1 << 2)) ? 1 : 0;
-	  data.VS = (~button & (1 << 1)) ? 1 : 0;
+	// Blocking UART
+	char choice[10];
+	while (1)
+	{
+		printf("Select mode: Button, UART\r\n");
+		scanf("%9s", &choice);
 
-	  tick(&data);
-	  char* msg;
-	  if(data.VP)
-	  {
-		  msg = "V";
-	  }
+		// Convert string to lower
+		for (int i = 0; i < strlen(choice); i++)
+		{
+			choice[i] = tolower((unsigned char)choice[i]);
+		}
 
-	  if(data.AP)
-	  {
-		  msg = "A";
-	  }
+		// Compare strings
+		if (strcmp(choice, "button") == 0 || strcmp(choice, "uart") == 0)
+		{
+			printf("You have selected the %s mode.\n", choice);
+			break;
+		}
 
-	  if(pUart)
-	  {
-		  fwrite(msg, strlen (msg), 1, pUart);
-	  }
+		printf("Invalid entry. Please try again.\n");
+	}
+	while (1)
+	{
+		// update time
+		data.deltaT = systemTime - prevTime;
+		prevTime = systemTime;
 
-	  // update outputs
-	  if(data.VP){
-		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x01);
-		  printf("VP\r\n");
-	  } else {
-		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
-	  }
+		if (strcmp(choice, "button") == 0)
+		{
 
-	  if(data.AP)
-	  {
-		  printf("AP\r\n");
-	  }
+			// update inputs
+			data.AS = (button & (1 << 2)) ? 1 : 0;
+			data.VS = (button & (1 << 1)) ? 1 : 0;
+			button = 0; // Bring back to 0
 
-	  if(data.AS)
-	  {
-		  printf("AS\r\n");
-	  }
+			tick(&data);
 
-	  if(data.VS)
-	  {
-		  printf("VS\r\n");
-	  }
+			// update outputs
+			if (data.VP)
+			{
+				IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x01);
+				printf("VP\r\n");
+			}
+			else
+			{
+				IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, IORD_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE) & ~0x01);
+			}
 
-//	  if(button){
-//		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
-//		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x01);
-//		  printf("System Shutting Down... Goodbye!\n");
-//		  break;
-//	  }
-  }
-//  while(1);
-  fclose(pUart);
-  return 0;
+			if (data.AP)
+			{
+				IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x02);
+				printf("AP\r\n");
+			}
+			else
+			{
+				IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, IORD_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE) & ~0x02);
+			}
+
+			if (data.VS)
+			{
+				IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x01);
+				printf("VS\r\n");
+			}
+			else
+			{
+				IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE) & ~0x01);
+			}
+
+			if (data.AS)
+			{
+				IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x02);
+				printf("AS\r\n");
+			}
+			else
+			{
+				IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, IORD_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE) & ~0x02);
+			}
+		}
+
+		else if (strcmp(choice, "uart") == 0)
+		{
+			IOWR_ALTERA_AVALON_UART_CONTROL(UART_BASE, 0);
+			if(IORD_ALTERA_AVALON_UART_STATUS(UART_BASE) & ALTERA_AVALON_UART_STATUS_RRDY_MSK){
+			  char input = IORD_ALTERA_AVALON_UART_RXDATA(UART_BASE);
+			  IOWR_ALTERA_AVALON_UART_CONTROL(UART_BASE, (1<<7));
+
+			  data.AS = (input == 65) ? 1 : 0;
+			  data.VS = (input == 86) ? 1 : 0;
+			}
+
+			tick(&data);
+
+
+
+			if (data.VP)
+			{
+				while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK)){}
+				IOWR_ALTERA_AVALON_UART_TXDATA(UART_BASE, 'V');
+			}
+
+			if (data.AP)
+			{
+				while(!(IORD_ALTERA_AVALON_UART_STATUS(UART_BASE) & ALTERA_AVALON_UART_STATUS_TRDY_MSK)){}
+				IOWR_ALTERA_AVALON_UART_TXDATA(UART_BASE, 'A');
+			}
+		}
+
+		// if (button)
+		// {
+		// 	IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
+		// 	IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x01);
+		// 	printf("System Shutting Down... Goodbye!\n");
+		// 	break;
+		// }
+	}
+	return 0;
 }
