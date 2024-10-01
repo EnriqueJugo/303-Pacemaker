@@ -7,7 +7,6 @@
 
 #include "timing.h"
 #include <stdio.h>
-
 #include "sccharts.h"
 
 void logic(TickData* d) {

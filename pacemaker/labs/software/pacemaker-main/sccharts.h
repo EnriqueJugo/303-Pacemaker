@@ -10,7 +10,6 @@
 #include "timing.h"
 #include <stdio.h>
 
-
 typedef struct {
   double _region0_null_x;
   double _region1_null_x;

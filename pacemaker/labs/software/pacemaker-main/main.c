@@ -28,14 +28,12 @@
 alt_u32 timerISR(void* context){
 	int* timeCount = (int*) context;
 	(*timeCount)++;
-	return 200; // next time out is 100ms
+	return 1; // next time out is 100ms
 }
 
 void buttonISR(void* context, alt_u32 id){
-	int* temp = (void*) context;
-	(*temp)++;
 	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEYS_BASE, 0);
-
+	printf("TRIGGER\r\n");
 }
 
 int main()
@@ -45,7 +43,7 @@ int main()
   int button = 0;
   void* buttonContext = (void*) &button;
   IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEYS_BASE, 0);
-  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(KEYS_BASE, 0x02);
+  IOWR_ALTERA_AVALON_PIO_IRQ_MASK(KEYS_BASE, 0x7);
   alt_irq_register(KEYS_IRQ,buttonContext, buttonISR);
 
   // SC Chart Init
@@ -68,31 +66,66 @@ int main()
   scanf("%x", &choice);
   printf("Entered: %x\n", choice);
 
+  FILE *pUart;
+  pUart = fopen(UART_NAME, "r+");
   while(1){
 	  // update time
 	  data.deltaT = systemTime - prevTime;
 	  prevTime = systemTime;
-//	  printf("dt: %.10f\r\n", data.deltaT);
+	  button = IORD_ALTERA_AVALON_PIO_DATA(KEYS_BASE);
 
 	  // update inputs
-	  data.AS = button;
+	  data.AS = (~button & (1 << 2)) ? 1 : 0;
+	  data.VS = (~button & (1 << 1)) ? 1 : 0;
+
 	  tick(&data);
+	  char* msg;
+	  if(data.VP)
+	  {
+		  msg = "V";
+	  }
+
+	  if(data.AP)
+	  {
+		  msg = "A";
+	  }
+
+	  if(pUart)
+	  {
+		  fwrite(msg, strlen (msg), 1, pUart);
+	  }
 
 	  // update outputs
 	  if(data.VP){
 		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x01);
-		  printf("dt: %.10f\r\n", data.deltaT);
+		  printf("VP\r\n");
 	  } else {
 		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
 	  }
 
-	  if(button){
-		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
-		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x01);
-		  // printf("System Shutting Down... Goodbye!\n");
-		  // break;
+	  if(data.AP)
+	  {
+		  printf("AP\r\n");
 	  }
+
+	  if(data.AS)
+	  {
+		  printf("AS\r\n");
+	  }
+
+	  if(data.VS)
+	  {
+		  printf("VS\r\n");
+	  }
+
+//	  if(button){
+//		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_RED_BASE, 0x00);
+//		  IOWR_ALTERA_AVALON_PIO_DATA(LEDS_GREEN_BASE, 0x01);
+//		  printf("System Shutting Down... Goodbye!\n");
+//		  break;
+//	  }
   }
 //  while(1);
+  fclose(pUart);
   return 0;
 }
