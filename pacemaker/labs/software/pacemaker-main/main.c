@@ -29,6 +29,11 @@
 
 uint32_t uartDivisor = 433;
 
+#define BUFFER_SIZE 100
+
+volatile char rx_buffer[BUFFER_SIZE]; // Buffer for received data
+volatile int rx_index = 0; // Index for the received buffer
+
 alt_u32 timerISR(void *context)
 {
 	int *timeCount = (int *)context;
@@ -43,6 +48,24 @@ void buttonISR(void *context, alt_u32 id)
 	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(KEYS_BASE, 0);
 }
 
+void uartISR(void* context, alt_u32 id) {
+    IOWR_ALTERA_AVALON_UART_CONTROL(UART_BASE, 0);
+
+    // Check if the interrupt was for RX (data received)
+    if (IORD_ALTERA_AVALON_UART_STATUS(UART_BASE) & ALTERA_AVALON_UART_STATUS_RRDY_MSK) {
+		char data = IORD_ALTERA_AVALON_UART_RXDATA(UART_BASE); // Read received data
+        if (rx_index < BUFFER_SIZE - 1) { // Avoid overflow
+            rx_buffer[rx_index++] = data; // Store in buffer
+            rx_buffer[rx_index] = '\0'; // Null-terminate for safety
+        } else {
+            // Handle buffer overflow (optional)
+            // e.g., reset index or notify
+            rx_index = 0; // Reset index for simplicity
+        }
+    }
+    IOWR_ALTERA_AVALON_UART_CONTROL(UART_BASE, (1<<7));
+}
+
 
 int main()
 {
@@ -55,6 +78,8 @@ int main()
 
 	// Register the ISR for UART
 	IOWR_ALTERA_AVALON_UART_DIVISOR(UART_BASE, uartDivisor);
+	IOWR_ALTERA_AVALON_UART_CONTROL(UART_BASE, ALTERA_AVALON_UART_CONTROL_RRDY_MSK);
+	alt_irq_register(UART_IRQ, NULL, uartISR); // Ensure UART_IRQ is defined correctly
 
 	// SC Chart Init
 	TickData data;
@@ -153,18 +178,13 @@ int main()
 
 		else if (strcmp(choice, "uart") == 0)
 		{
-			IOWR_ALTERA_AVALON_UART_CONTROL(UART_BASE, 0);
-			if(IORD_ALTERA_AVALON_UART_STATUS(UART_BASE) & ALTERA_AVALON_UART_STATUS_RRDY_MSK){
-			  char input = IORD_ALTERA_AVALON_UART_RXDATA(UART_BASE);
-			  IOWR_ALTERA_AVALON_UART_CONTROL(UART_BASE, (1<<7));
-
-			  data.AS = (input == 65) ? 1 : 0;
-			  data.VS = (input == 86) ? 1 : 0;
+			if (rx_index > 0) {
+				data.VS = (rx_buffer[rx_index - 1] == 65) ? 1 : 0;
+				data.AS = (rx_buffer[rx_index - 1] == 86) ? 1 : 0;
+				rx_index = 0;
 			}
 
 			tick(&data);
-
-
 
 			if (data.VP)
 			{
