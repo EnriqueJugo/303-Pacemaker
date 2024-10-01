@@ -2,10 +2,5 @@ db
 incremental_db
 output_files
 .metadata
-software
-!software/pacemaker-main/main.c
-!software/pacemaker-main/sccharts.c
-!software/pacemaker-main/sccharts.h
-!software/pacemaker-main/timing.c
 *.qsf
 *.qwf
